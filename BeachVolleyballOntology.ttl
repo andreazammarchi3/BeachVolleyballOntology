@@ -4,23 +4,27 @@
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sport: <https://sportschema.org/ontologies/main/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix sport: <https://sportschema.org/ontologies/main#> .
 @base <https://github.com/andreazammarchi3/BeachVolleyballOntology/> .
 
 <https://github.com/andreazammarchi3/BeachVolleyballOntology/> rdf:type owl:Ontology ;
-    dcterms:creator "Andrea Zammarchi" ;
-    dcterms:title "Beach Volleyball Ontology" ;
-    rdfs:comment "This ontology models the domain of beach volleyball." ;
-    dcterms:license "https://opensource.org/licenses/MIT" ;
-    owl:versionInfo "1.0.0" .
+                                                                dcterms:creator "Andrea Zammarchi" ;
+                                                                dcterms:license "https://opensource.org/licenses/MIT" ;
+                                                                dcterms:title "Beach Volleyball Ontology" ;
+                                                                rdfs:comment "This ontology models the domain of beach volleyball." ;
+                                                                owl:versionInfo "1.0.0" .
 
 #################################################################
-#    Annotation Properties
+#    Annotation properties
 #################################################################
 
 ###  http://purl.org/dc/terms/author
 dcterms:author rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:AnnotationProperty .
 
 
 ###  http://purl.org/dc/terms/license
@@ -30,46 +34,163 @@ dcterms:license rdf:type owl:AnnotationProperty .
 ###  http://purl.org/dc/terms/title
 dcterms:title rdf:type owl:AnnotationProperty .
 
-#################################################################
-#    Object Properties
-#################################################################
-
-###  https://github.com/andreazammarchi3/BeachVolleyballOntology/memberOf
-:memberOf rdf:type owl:ObjectProperty ;
-    rdfs:domain :Athlete ;
-    rdfs:range :Team .
-
-
-#################################################################
-#    Data properties
-#################################################################
-
-
 
 #################################################################
 #    Classes
 #################################################################
 
-###  https://github.com/andreazammarchi3/BeachVolleyballOntology/Athlete
-:Athlete rdf:type owl:Class ;
-    rdfs:comment "An athlete is a person who competes in beach volleyball." ;
-    owl:equivalentClass sport:Athlete .
+###  https://sportschema.org/ontologies/main/Action
+sport:Action rdf:type owl:Class ;
+    rdfs:subClassOf sport:ParticipatableThing ;
+    rdfs:comment "Something that happens during an event: a kick, a goal, a foul etc"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Action"@en .
 
 
-###  https://github.com/andreazammarchi3/BeachVolleyballOntology/Team
-:Team rdf:type owl:Class ;
-    rdfs:comment "A team is a group of two athletes who compete together in beach volleyball." ;
-    owl:equivalentClass sport:Team .
+###  https://sportschema.org/ontologies/main/Agent
+sport:Agent rdf:type owl:Class ;
+    rdfs:comment "A participant in a sport event."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Agent"@en .
 
-### https://github.com/andreazammarchi3/BeachVolleyballOntology/Tournament
-:Tournament rdf:type owl:Class ;
-    rdfs:comment "A class representing a beach volleyball tournament." ;
-    owl:equivalentClass sport:Competition .
 
-### https://github.com/andreazammarchi3/BeachVolleyballOntology/Match
-:Match rdf:type owl:Class ;
-    rdfs:comment "A class representing a match between two teams in a beach volleyball tournament." ;
-    owl:equivalentClass sport:Event .
+###  https://sportschema.org/ontologies/main/Associate
+sport:Associate rdf:type owl:Class ;
+    rdfs:subClassOf sport:Individual ;
+    rdfs:comment "A person assisting competitor(s) in an event but not competing themselves, e.g. a football manager or coach"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Associate"@en .
+
+
+###  https://sportschema.org/ontologies/main/AssociateParticipation
+sport:AssociateParticipation rdf:type owl:Class ;
+    rdfs:subClassOf sport:Participation ;
+    rdfs:comment "The particpation of an associate who supports players and teams, e.g. coach, manager, trainer"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Associate Participation"@en .
+
+
+###  https://sportschema.org/ontologies/main/Athlete
+sport:Athlete rdf:type owl:Class ;
+    rdfs:subClassOf sport:Individual ;
+    rdfs:comment "A competitor in an individual event or a member of a team"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Athlete"@en .
+
+
+###  https://sportschema.org/ontologies/main/Competition
+sport:Competition rdf:type owl:Class ;
+    rdfs:subClassOf sport:ParticipatableThing ;
+    rdfs:comment "A grouping of events usually based on proximity by time."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Competition"@en .
+
+
+###  https://sportschema.org/ontologies/main/CompetitionPhase
+sport:CompetitionPhase rdf:type owl:Class ;
+    rdfs:subClassOf sport:Competition ;
+    rdfs:comment "A sub-group of events within a Competition such as the semi-finals."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Competition Phase"@en .
+
+
+###  https://sportschema.org/ontologies/main/CompetitorParticipation
+sport:CompetitorParticipation rdf:type owl:Class ;
+    rdfs:subClassOf sport:Participation ;
+    rdfs:comment "The participation of an actor that can win or lose an event."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Competitor Participation"@en .
+
+
+###  https://sportschema.org/ontologies/main/Event
+sport:Event rdf:type owl:Class ;
+    rdfs:subClassOf sport:ParticipatableThing ;
+    rdfs:comment "A contest of competitive actions that generates statistical results."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Event"@en .
+
+
+###  https://sportschema.org/ontologies/main/GoverningBody
+sport:GoverningBody rdf:type owl:Class ;
+    rdfs:comment "The organisation that creates and polices the rules of a sports competition."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Governing Body"@en .
+
+
+###  https://sportschema.org/ontologies/main/Individual
+sport:Individual rdf:type owl:Class ;
+    rdfs:subClassOf sport:Agent ;
+    rdfs:comment "An individual taking part in an event on their own or as part of a team. Could be a person or an animal such as a dog or horse."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Individual"@en .
+
+
+###  https://sportschema.org/ontologies/main/IndividualParticipation
+sport:IndividualParticipation rdf:type owl:Class ;
+    rdfs:subClassOf sport:CompetitorParticipation ;
+    rdfs:comment "The participation of an individual in an event"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Individual Participation"@en .
+
+
+###  https://sportschema.org/ontologies/main/Official
+sport:Official rdf:type owl:Class ;
+    rdfs:subClassOf sport:Individual ;
+    rdfs:comment "A person who ensures that the sports event is played according to its rules. Also referred to as umpire or referee."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Official"@en .
+
+
+###  https://sportschema.org/ontologies/main/OfficialParticipation
+sport:OfficialParticipation rdf:type owl:Class ;
+    rdfs:subClassOf sport:Participation ;
+    rdfs:comment "The participation of an offcial in an event"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Official Participation"@en .
+
+
+###  https://sportschema.org/ontologies/main/ParticipatableThing
+sport:ParticipatableThing rdf:type owl:Class ;
+    rdfs:comment "An abstract superclass for anything that can be participated in, such as an Event, Competition or Action."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Participatable Thing"@en .
+
+
+###  https://sportschema.org/ontologies/main/Participation
+sport:Participation rdf:type owl:Class ;
+    rdfs:comment "The participation of an actor in an event."@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Participation"@en .
+
+
+###  https://sportschema.org/ontologies/main/Site
+sport:Site rdf:type owl:Class ;
+    rdfs:comment "The location where an activity takes place"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Site"@en .
+
+
+###  https://sportschema.org/ontologies/main/Team
+sport:Team rdf:type owl:Class ;
+    rdfs:subClassOf sport:Agent ;
+    rdfs:comment "A group of individuals competing as one entity"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Team"@en .
+
+
+###  https://sportschema.org/ontologies/main/TeamParticipation
+sport:TeamParticipation rdf:type owl:Class ;
+    rdfs:subClassOf sport:CompetitorParticipation ;
+    rdfs:comment "The participation of a team in an event"@en ;
+    rdfs:isDefinedBy sport: ;
+    rdfs:label "Team Participation"@en .
+
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/Court
+:Court rdf:type owl:Class ;
+    rdfs:subClassOf sport:Site ;
+    rdfs:comment "The specific court where a match is played."@en ;
+    rdfs:label "Court"@en .
 
 
 ###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
