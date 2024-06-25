@@ -293,8 +293,7 @@ sport:participationSplitOf rdf:type owl:ObjectProperty ;
 ###  https://sportschema.org/ontologies/main/phaseContainsEvent
 sport:phaseContainsEvent rdf:type owl:ObjectProperty ;
                          rdfs:domain sport:CompetitionPhase ;
-                         rdfs:range sport:Event ,
-                                    sport:event ;
+                         rdfs:range sport:Event ;
                          rdfs:comment "An Event (such as a round or a finals phase) contained in this CompetitionPhase"@en ,
                                       "The Event is part of a CompetitionPhase"@en ;
                          rdfs:isDefinedBy sport: ;
@@ -1482,10 +1481,6 @@ sport:TeamParticipation rdf:type owl:Class ;
                         rdfs:comment "The participation of a team in an event"@en ;
                         rdfs:isDefinedBy sport: ;
                         rdfs:label "Team Participation"@en .
-
-
-###  https://sportschema.org/ontologies/main/event
-sport:event rdf:type owl:Class .
 
 
 #################################################################
