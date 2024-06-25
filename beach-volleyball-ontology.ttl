@@ -12,9 +12,9 @@
 
 <https://github.com/andreazammarchi3/BeachVolleyballOntology/> rdf:type owl:Ontology ;
                                                                 dcterms:creator "Andrea Zammarchi" ;
-                                                                dcterms:description "An ontology for beach volleyball statistics and sports information." ;
+                                                                dcterms:description "An ontology for beach volleyball statistics and sports information."@en ;
                                                                 dcterms:license "https://opensource.org/licenses/MIT" ;
-                                                                dcterms:title "Beach Volleyball Ontology" ;
+                                                                dcterms:title "Beach Volleyball Ontology"@en ;
                                                                 owl:versionInfo "1.0.0" .
 
 #################################################################
