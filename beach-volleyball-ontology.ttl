@@ -1,4 +1,5 @@
 @prefix : <https://github.com/andreazammarchi3/BeachVolleyballOntology/> .
+@prefix bv: <https://github.com/andreazammarchi3/BeachVolleyballOntology/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
@@ -6,8 +7,8 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix sport: <https://sportschema.org/ontologies/main/> .
 @prefix schema: <https://schema.org/> .
-@prefix spstat: <https://sportschema.org/ontologies/corestatistics/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix schema1: <http://schema.org/> .
 @base <https://github.com/andreazammarchi3/BeachVolleyballOntology/> .
 
 <https://github.com/andreazammarchi3/BeachVolleyballOntology/> rdf:type owl:Ontology ;
@@ -45,36 +46,54 @@ dcterms:title rdf:type owl:AnnotationProperty .
 xsd:date rdf:type rdfs:Datatype .
 
 
-###  http://www.w3.org/2004/02/skos/core#Concept
-<http://www.w3.org/2004/02/skos/core#Concept> rdf:type rdfs:Datatype .
-
-
 #################################################################
 #    Object Properties
 #################################################################
 
-###  https://sportschema.org/ontologies/corestatistics/resultEffectTarget
-spstat:resultEffectTarget rdf:type owl:ObjectProperty ;
-                          rdfs:domain sport:Participation ;
-                          rdfs:range sport:ParticipatableThing .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/athletePerformance
+bv:athletePerformance rdf:type owl:ObjectProperty ;
+                      owl:inverseOf bv:performanceOf ;
+                      rdfs:domain sport:Athlete ;
+                      rdfs:range bv:AthletePerfomance ;
+                      rdfs:comment "Link between an athlete and a performance."@en ;
+                      rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                      rdfs:label "athlete performance"@en .
 
 
-###  https://sportschema.org/ontologies/main/actionInEvent
-sport:actionInEvent rdf:type owl:ObjectProperty ;
-                    owl:inverseOf sport:containsAction ;
-                    rdfs:domain sport:Action ;
-                    rdfs:range sport:Event ;
-                    rdfs:comment "Link to the event in which an Action took place"@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "action in event"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/performance
+bv:performance rdf:type owl:ObjectProperty ;
+               owl:inverseOf bv:performanceIn ;
+               rdfs:domain sport:Match ;
+               rdfs:range bv:AthletePerfomance ;
+               rdfs:comment "Link between a match and a performance."@en ;
+               rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+               rdfs:label "performance"@en .
+
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/performanceIn
+bv:performanceIn rdf:type owl:ObjectProperty ;
+                 rdfs:domain bv:AthletePerfomance ;
+                 rdfs:range sport:Match ;
+                 rdfs:comment "Link between a performance and a match."@en ;
+                 rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                 rdfs:label "performance in"@en .
+
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/performanceOf
+bv:performanceOf rdf:type owl:ObjectProperty ;
+                 rdfs:domain bv:AthletePerfomance ;
+                 rdfs:range sport:Athlete ;
+                 rdfs:comment "Link between a performance and an athlete."@en ;
+                 rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                 rdfs:label "performance of"@en .
 
 
 ###  https://sportschema.org/ontologies/main/child
 sport:child rdf:type owl:ObjectProperty ;
             owl:inverseOf sport:parent ;
-            rdfs:domain sport:ParticipatableThing ;
-            rdfs:range sport:ParticipatableThing ;
-            rdfs:comment "Link from a ParticipatableThing to its child, to represent child Event, CompetitionPhase etc"@en ;
+            rdfs:domain sport:Competition ;
+            rdfs:range sport:Match ;
+            rdfs:comment "Link from a Competition to its child Match"@en ;
             rdfs:isDefinedBy sport: ;
             rdfs:label "child"@en .
 
@@ -84,18 +103,21 @@ sport:childSite rdf:type owl:ObjectProperty ;
                 owl:inverseOf sport:parentSite ;
                 rdfs:domain sport:Site ;
                 rdfs:range sport:Site ;
-                rdfs:comment "Link from a Site to its child, such as a link from an Olympic Park to an individual stadium or from a tennis complex to an individual tennis court"@en ;
+                rdfs:comment "Link from a Site to its child, such as a link from an Olympic Park to an individual stadium or from a tennis complex to an individual tennis court."@en ;
                 rdfs:isDefinedBy sport: ;
                 rdfs:label "child site"@en .
 
 
-###  https://sportschema.org/ontologies/main/containsAction
-sport:containsAction rdf:type owl:ObjectProperty ;
-                     rdfs:domain sport:Event ;
-                     rdfs:range sport:Action ;
-                     rdfs:comment "Link to action in that took place at the Event"@en ;
-                     rdfs:isDefinedBy sport: ;
-                     rdfs:label "contains action"@en .
+###  https://sportschema.org/ontologies/main/competitionPhaseType
+sport:competitionPhaseType rdf:type owl:ObjectProperty ;
+                           rdfs:domain sport:CompetitionPhase ;
+                           rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> .
+
+
+###  https://sportschema.org/ontologies/main/competitionType
+sport:competitionType rdf:type owl:ObjectProperty ;
+                      rdfs:domain sport:Competition ;
+                      rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> .
 
 
 ###  https://sportschema.org/ontologies/main/containsCompetitionPhase
@@ -103,39 +125,19 @@ sport:containsCompetitionPhase rdf:type owl:ObjectProperty ;
                                owl:inverseOf sport:phaseInCompetition ;
                                rdfs:domain sport:Competition ;
                                rdfs:range sport:CompetitionPhase ;
-                               rdfs:comment "Link from the competition to its constituent phases"@en ;
+                               rdfs:comment "Link from the competition to its constituent phases."@en ;
                                rdfs:isDefinedBy sport: ;
                                rdfs:label "contains competition phase"@en .
 
 
-###  https://sportschema.org/ontologies/main/containsEvent
-sport:containsEvent rdf:type owl:ObjectProperty ;
-                    owl:inverseOf sport:eventInCompetition ;
+###  https://sportschema.org/ontologies/main/containsMatch
+sport:containsMatch rdf:type owl:ObjectProperty ;
+                    owl:inverseOf sport:matchInCompetition ;
                     rdfs:domain sport:Competition ;
-                    rdfs:range sport:Event ;
-                    rdfs:comment "An Event that is part of this Competition"@en ;
+                    rdfs:range sport:Match ;
+                    rdfs:comment "An Match that is part of this Competition."@en ;
                     rdfs:isDefinedBy sport: ;
-                    rdfs:label "contains event"@en .
-
-
-###  https://sportschema.org/ontologies/main/eventInCompetition
-sport:eventInCompetition rdf:type owl:ObjectProperty ;
-                         owl:inverseOf sport:phaseContainsEvent ;
-                         rdfs:domain sport:Event ;
-                         rdfs:range sport:Competition ;
-                         rdfs:comment "The Competition that an Event is part of"@en ;
-                         rdfs:isDefinedBy sport: ;
-                         rdfs:label "event in competition"@en .
-
-
-###  https://sportschema.org/ontologies/main/eventInCompetitionPhase
-sport:eventInCompetitionPhase rdf:type owl:ObjectProperty ;
-                              owl:inverseOf sport:phaseContainsEvent ;
-                              rdfs:domain sport:Event ;
-                              rdfs:range sport:CompetitionPhase ;
-                              rdfs:comment "The CompetitionPhase (such as a round or a finals phase) of which an Event is a part"@en ;
-                              rdfs:isDefinedBy sport: ;
-                              rdfs:label "event in competition phase"@en .
+                    rdfs:label "contains match"@en .
 
 
 ###  https://sportschema.org/ontologies/main/governedBy
@@ -143,7 +145,7 @@ sport:governedBy rdf:type owl:ObjectProperty ;
                  owl:inverseOf sport:governs ;
                  rdfs:domain sport:Competition ;
                  rdfs:range sport:GoverningBody ;
-                 rdfs:comment "Link to the organisation that regulates a given Competition"@en ;
+                 rdfs:comment "Link to the organisation that regulates a given Competition."@en ;
                  rdfs:isDefinedBy sport: ;
                  rdfs:label "governing body"@en .
 
@@ -160,9 +162,9 @@ sport:governs rdf:type owl:ObjectProperty ;
 ###  https://sportschema.org/ontologies/main/location
 sport:location rdf:type owl:ObjectProperty ;
                owl:inverseOf sport:locationOf ;
-               rdfs:domain sport:ParticipatableThing ;
+               rdfs:domain sport:Match ;
                rdfs:range sport:Site ;
-               rdfs:comment "Link to the location (Site) where an event takes place"@en ;
+               rdfs:comment "Link to the location (Site) where a match takes place."@en ;
                rdfs:isDefinedBy sport: ;
                rdfs:label "location"@en .
 
@@ -170,55 +172,61 @@ sport:location rdf:type owl:ObjectProperty ;
 ###  https://sportschema.org/ontologies/main/locationOf
 sport:locationOf rdf:type owl:ObjectProperty ;
                  rdfs:domain sport:Site ;
-                 rdfs:range sport:Event ;
-                 rdfs:comment "Link to an event that takes place at this location (Site)"@en ;
+                 rdfs:range sport:Match ;
+                 rdfs:comment "Link to a match that takes place at this location (Site)."@en ;
                  rdfs:isDefinedBy sport: ;
                  rdfs:label "location of"@en .
+
+
+###  https://sportschema.org/ontologies/main/matchInCompetition
+sport:matchInCompetition rdf:type owl:ObjectProperty ;
+                         rdfs:domain sport:Match ;
+                         rdfs:range sport:Competition ;
+                         rdfs:comment "The Competition that an Match is part of."@en ;
+                         rdfs:isDefinedBy sport: ;
+                         rdfs:label "match in competition"@en .
+
+
+###  https://sportschema.org/ontologies/main/matchInCompetitionPhase
+sport:matchInCompetitionPhase rdf:type owl:ObjectProperty ;
+                              owl:inverseOf sport:phaseContainsMatch ;
+                              rdfs:domain sport:Match ;
+                              rdfs:range sport:CompetitionPhase ;
+                              rdfs:comment "The CompetitionPhase (such as a round or a finals phase) of which an Match is a part."@en ;
+                              rdfs:isDefinedBy sport: ;
+                              rdfs:label "match in competition phase"@en .
+
+
+###  https://sportschema.org/ontologies/main/matchOutcome
+sport:matchOutcome rdf:type owl:ObjectProperty ;
+                   rdfs:domain sport:TeamParticipation ;
+                   rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> .
 
 
 ###  https://sportschema.org/ontologies/main/member
 sport:member rdf:type owl:ObjectProperty ;
              owl:inverseOf sport:memberOf ;
-             rdfs:domain sport:IndividualMembership ;
-             rdfs:range sport:Individual ;
-             rdfs:comment "Link between a membership and an individual"@en ;
+             rdfs:domain sport:Team ;
+             rdfs:range sport:Athlete ;
+             rdfs:comment "Link between a team and an athlete."@en ;
              rdfs:isDefinedBy sport: ;
              rdfs:label "member"@en .
 
 
 ###  https://sportschema.org/ontologies/main/memberOf
 sport:memberOf rdf:type owl:ObjectProperty ;
-               rdfs:domain sport:Individual ;
-               rdfs:range sport:IndividualMembership ;
-               rdfs:comment "Link between an individual and a membership"@en ;
+               rdfs:domain sport:Athlete ;
+               rdfs:range sport:Team ;
+               rdfs:comment "Link between an athlete and a team."@en ;
                rdfs:isDefinedBy sport: ;
                rdfs:label "member of"@en .
 
 
-###  https://sportschema.org/ontologies/main/membership
-sport:membership rdf:type owl:ObjectProperty ;
-                 owl:inverseOf sport:membershipOf ;
-                 rdfs:domain sport:Team ;
-                 rdfs:range sport:IndividualMembership ;
-                 rdfs:comment "Link between a team and a membership"@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "membership"@en .
-
-
-###  https://sportschema.org/ontologies/main/membershipOf
-sport:membershipOf rdf:type owl:ObjectProperty ;
-                   rdfs:domain sport:IndividualMembership ;
-                   rdfs:range sport:Team ;
-                   rdfs:comment "Link between a membership and a team"@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "membership of"@en .
-
-
 ###  https://sportschema.org/ontologies/main/parent
 sport:parent rdf:type owl:ObjectProperty ;
-             rdfs:domain sport:ParticipatableThing ;
-             rdfs:range sport:ParticipatableThing ;
-             rdfs:comment "Link from a ParticipatableThing to its parent, to represent parent Event, CompetitionPhase etc"@en ;
+             rdfs:domain sport:Match ;
+             rdfs:range sport:Competition ;
+             rdfs:comment "Link from a Match to its parent Competition"@en ;
              rdfs:isDefinedBy sport: ;
              rdfs:label "parent"@en .
 
@@ -227,84 +235,49 @@ sport:parent rdf:type owl:ObjectProperty ;
 sport:parentSite rdf:type owl:ObjectProperty ;
                  rdfs:domain sport:Site ;
                  rdfs:range sport:Site ;
-                 rdfs:comment "Link from a Site to its parent, such as a link from a stadium to an Olympic Park or from a tennis court to the tennis complex"@en ;
+                 rdfs:comment "Link from a Site to its parent, such as a link from a stadium to an Olympic Park or from a tennis court to the tennis complex."@en ;
                  rdfs:isDefinedBy sport: ;
                  rdfs:label "parent site"@en .
 
 
 ###  https://sportschema.org/ontologies/main/participantOf
 sport:participantOf rdf:type owl:ObjectProperty ;
-                    owl:inverseOf sport:participation ,
-                                  sport:participationBy ;
-                    rdfs:domain sport:Agent ;
-                    rdfs:range sport:Participation ;
-                    rdfs:comment "Link from a person or team to their participation in an event"@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "participant of"@en .
+                    owl:inverseOf sport:participation .
 
 
 ###  https://sportschema.org/ontologies/main/participation
 sport:participation rdf:type owl:ObjectProperty ;
                     owl:inverseOf sport:participationIn ;
-                    rdfs:domain sport:ParticipatableThing ;
-                    rdfs:range sport:Participation ;
-                    rdfs:comment "Link from a ParticipatableThing to a participation by an Agent"@en ;
+                    rdfs:domain sport:Match ;
+                    rdfs:range sport:TeamParticipation ;
+                    rdfs:comment "Link from a Match to a participation by a team."@en ;
                     rdfs:isDefinedBy sport: ;
                     rdfs:label "participation"@en .
 
 
-###  https://sportschema.org/ontologies/main/participationBy
-sport:participationBy rdf:type owl:ObjectProperty ;
-                      rdfs:domain sport:Participation ;
-                      rdfs:range sport:Agent ;
-                      rdfs:comment "Link to a person or team participating in an event, season or action"@en ;
-                      rdfs:isDefinedBy sport: ;
-                      rdfs:label "participation by"@en .
-
-
 ###  https://sportschema.org/ontologies/main/participationIn
 sport:participationIn rdf:type owl:ObjectProperty ;
-                      rdfs:domain sport:Participation ;
-                      rdfs:range sport:ParticipatableThing ;
-                      rdfs:comment "Link from a participation by an Agent to a ParticipatableThing"@en ;
+                      rdfs:domain sport:TeamParticipation ;
+                      rdfs:range sport:Match ;
+                      rdfs:comment "Link from a participation by a Team to a Match."@en ;
                       rdfs:isDefinedBy sport: ;
                       rdfs:label "participation in"@en .
 
 
-###  https://sportschema.org/ontologies/main/participationSplit
-sport:participationSplit rdf:type owl:ObjectProperty ;
-                         owl:inverseOf sport:participationSplitOf ;
-                         rdfs:domain sport:Participation ;
-                         rdfs:range sport:ParticipationSplit ;
-                         rdfs:comment "Link to a part of a participation of an actor in an event or season, such as one half of a football match or all home games."@en ;
-                         rdfs:isDefinedBy sport: ;
-                         rdfs:label "participation split"@en .
-
-
-###  https://sportschema.org/ontologies/main/participationSplitOf
-sport:participationSplitOf rdf:type owl:ObjectProperty ;
-                           rdfs:domain sport:ParticipationSplit ;
-                           rdfs:range sport:Participation ;
-                           rdfs:comment "Link to a participation of which this is a part"@en ;
-                           rdfs:isDefinedBy sport: ;
-                           rdfs:label "participation split of"@en .
-
-
-###  https://sportschema.org/ontologies/main/phaseContainsEvent
-sport:phaseContainsEvent rdf:type owl:ObjectProperty ;
+###  https://sportschema.org/ontologies/main/phaseContainsMatch
+sport:phaseContainsMatch rdf:type owl:ObjectProperty ;
                          rdfs:domain sport:CompetitionPhase ;
-                         rdfs:range sport:Event ;
-                         rdfs:comment "An Event (such as a round or a finals phase) contained in this CompetitionPhase"@en ,
-                                      "The Event is part of a CompetitionPhase"@en ;
+                         rdfs:range sport:Match ;
+                         rdfs:comment "An Match (such as a round or a finals phase) contained in this CompetitionPhase."@en ;
                          rdfs:isDefinedBy sport: ;
-                         rdfs:label "phase contains event"@en .
+                         rdfs:label "phase contains match"@en .
 
 
 ###  https://sportschema.org/ontologies/main/phaseInCompetition
 sport:phaseInCompetition rdf:type owl:ObjectProperty ;
                          rdfs:domain sport:CompetitionPhase ;
                          rdfs:range sport:Competition ;
-                         rdfs:comment "Link to the competition of which this CompetitionPhase is a part"@en ;
+                         rdfs:comment "Link to the competition of which this CompetitionPhase is a part."@en ;
                          rdfs:isDefinedBy sport: ;
                          rdfs:label "phase in competition"@en .
 
@@ -313,1050 +286,241 @@ sport:phaseInCompetition rdf:type owl:ObjectProperty ;
 #    Data properties
 #################################################################
 
-###  https://sportschema.org/ontologies/corestatistics/adjustedScoreAgainst
-spstat:adjustedScoreAgainst rdf:type owl:DatatypeProperty ;
-                            rdfs:domain sport:Participation ;
-                            rdfs:range xsd:integer ;
-                            rdfs:comment "The final score against as adjusted by some authority. Usually as a result of some dispute or transgression that must be settled post-event and rendered in the score. Will differ from the regular score reflecting the number of actual goals scored in play. Should be tested for before displaying actual score."@en ;
-                            rdfs:label "adjustedScoreAgainst"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/attackErrors
+bv:attackErrors rdf:type owl:DatatypeProperty ;
+                rdfs:domain bv:AthletePerfomance ;
+                rdfs:range xsd:integer ;
+                rdfs:comment "The number of attack errors made by an athlete in a match."@en ;
+                rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                rdfs:label "attack errors"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/adjustedScoreFor
-spstat:adjustedScoreFor rdf:type owl:DatatypeProperty ;
-                        rdfs:domain sport:Participation ;
-                        rdfs:range xsd:integer ;
-                        rdfs:comment "The final score as adjusted by some authority. Usually as a result of some dispute or transgression that must be settled post-event and rendered in the score.  Will differ from the regular score reflecting the number of actual goals scored in play. Should be tested for before displaying actual score."@en ;
-                        rdfs:label "adjustedScoreFor"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/attacks
+bv:attacks rdf:type owl:DatatypeProperty ;
+           rdfs:domain bv:AthletePerfomance ;
+           rdfs:range xsd:integer ;
+           rdfs:comment "The number of attacks made by an athlete in a match."@en ;
+           rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+           rdfs:label "attacks"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/eventOutcome
-spstat:eventOutcome rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Participation ;
-                    rdfs:range xsd:integer ;
-                    rdfs:comment "Whether the competitor won, lost, or tied."@en ;
-                    rdfs:label "eventOutcome"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/blocks
+bv:blocks rdf:type owl:DatatypeProperty ;
+          rdfs:domain bv:AthletePerfomance ;
+          rdfs:range xsd:integer ;
+          rdfs:comment "The number of blocks made by an athlete in a match."@en ;
+          rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+          rdfs:label "blocks"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/eventStandingPoints
-spstat:eventStandingPoints rdf:type owl:DatatypeProperty ;
-                           rdfs:domain sport:Participation ;
-                           rdfs:range xsd:integer ;
-                           rdfs:comment "How many points were earned as a result of the outcome of this particular event."@en ;
-                           rdfs:label "eventStandingPoints"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/eventStandingPointsAgainst
-spstat:eventStandingPointsAgainst rdf:type owl:DatatypeProperty ;
-                                  rdfs:domain sport:Participation ;
-                                  rdfs:range xsd:integer ;
-                                  rdfs:comment "How many points were deducted as a result of the outcome of this particular event. This occurs, for example, in the German Handball leagues."@en ;
-                                  rdfs:label "eventStandingPointsAgainst"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/eventsDiscarded
-spstat:eventsDiscarded rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Participation ;
-                       rdfs:range xsd:integer ;
-                       rdfs:comment "The number of events that the team or player has discarded under this particular time period. Added from issue #29 2019-03-20."@en ;
-                       rdfs:label "eventsDiscarded"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/eventsPlayed
-spstat:eventsPlayed rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Participation ;
-                    rdfs:range xsd:integer ;
-                    rdfs:comment "The number of sports-events in which this team or player has already participated."@en ;
-                    rdfs:label "eventsPlayed"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/eventsRemaining
-spstat:eventsRemaining rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Participation ;
-                       rdfs:range xsd:integer ;
-                       rdfs:comment "Number of sports-events the player has yet to participate in."@en ;
-                       rdfs:label "eventsRemaining"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/eventsStarted
-spstat:eventsStarted rdf:type owl:DatatypeProperty ;
-                     rdfs:domain sport:Participation ;
-                     rdfs:range xsd:integer ;
-                     rdfs:comment "Number of sports-events the player has played in since the start of the event."@en ;
-                     rdfs:label "eventsStarted"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/gamesBack
-spstat:gamesBack rdf:type owl:DatatypeProperty ;
-                 rdfs:domain sport:Participation ;
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/defenseErrors
+bv:defenseErrors rdf:type owl:DatatypeProperty ;
+                 rdfs:domain bv:AthletePerfomance ;
                  rdfs:range xsd:integer ;
-                 rdfs:comment "A number used to measure how behind one team is from first place. The first place team is 0 games back."@en ;
-                 rdfs:label "gamesBack"@en .
+                 rdfs:comment "The number of defense errors made by an athlete in a match."@en ;
+                 rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                 rdfs:label "defense errors"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/losses
-spstat:losses rdf:type owl:DatatypeProperty ;
-              rdfs:domain sport:Participation ;
-              rdfs:range xsd:integer ;
-              rdfs:comment "Number of losses."@en ;
-              rdfs:label "losses"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/defenses
+bv:defenses rdf:type owl:DatatypeProperty ;
+            rdfs:domain bv:AthletePerfomance ;
+            rdfs:range xsd:integer ;
+            rdfs:comment "The number of defenses made by an athlete in a match."@en ;
+            rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+            rdfs:label "defenses"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/lossesOvertime
-spstat:lossesOvertime rdf:type owl:DatatypeProperty ;
-                      rdfs:domain sport:Participation ;
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/errors
+bv:errors rdf:type owl:DatatypeProperty ;
+          rdfs:domain bv:AthletePerfomance ;
+          rdfs:range xsd:integer ;
+          rdfs:comment "The number of errors made by an athlete in a match."@en ;
+          rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+          rdfs:label "errors"@en .
+
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/points
+bv:points rdf:type owl:DatatypeProperty ;
+          rdfs:domain bv:AthletePerfomance ;
+          rdfs:range xsd:integer ;
+          rdfs:comment "The number of points scored by an athlete in a match."@en ;
+          rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+          rdfs:label "points"@en .
+
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/positiveDefenses
+bv:positiveDefenses rdf:type owl:DatatypeProperty ;
+                    rdfs:domain bv:AthletePerfomance ;
+                    rdfs:range xsd:integer ;
+                    rdfs:comment "The number of positive defenses made by an athlete in a match."@en ;
+                    rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                    rdfs:label "positive defenses"@en .
+
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/positiveReceptions
+bv:positiveReceptions rdf:type owl:DatatypeProperty ;
+                      rdfs:domain bv:AthletePerfomance ;
                       rdfs:range xsd:integer ;
-                      rdfs:comment "Number of losses in events which went into overtime. For leagues that use this as a top-level outcome category (eg. NHL), as opposed to just a derivative of scoping."@en ;
-                      rdfs:label "lossesOvertime"@en .
+                      rdfs:comment "The number of positive receptions made by an athlete in a match."@en ;
+                      rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                      rdfs:label "positive receptions"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/periodExtraTimeAdded
-spstat:periodExtraTimeAdded rdf:type owl:DatatypeProperty ;
-                            rdfs:domain sport:Participation ;
-                            rdfs:range xsd:integer ;
-                            rdfs:comment "How many minutes the referee has decided to add to the period."@en ;
-                            rdfs:label "periodExtraTimeAdded"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/positiveSets
+bv:positiveSets rdf:type owl:DatatypeProperty ;
+                rdfs:domain bv:AthletePerfomance ;
+                rdfs:range xsd:integer ;
+                rdfs:comment "The number of positive sets made by an athlete in a match."@en ;
+                rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                rdfs:label "positive sets"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/periodExtraTimeElapsed
-spstat:periodExtraTimeElapsed rdf:type owl:DatatypeProperty ;
-                              rdfs:domain sport:Participation ;
-                              rdfs:range xsd:integer ;
-                              rdfs:comment "How much time exactly MMSS that was actually elapsed in the period."@en ;
-                              rdfs:label "periodExtraTimeElapsed"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/receptionErrors
+bv:receptionErrors rdf:type owl:DatatypeProperty ;
+                   rdfs:domain bv:AthletePerfomance ;
+                   rdfs:range xsd:integer ;
+                   rdfs:comment "The number of reception errors made by an athlete in a match."@en ;
+                   rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                   rdfs:label "reception errors"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/points
-spstat:points rdf:type owl:DatatypeProperty ;
-              rdfs:domain sport:Participation ;
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/receptions
+bv:receptions rdf:type owl:DatatypeProperty ;
+              rdfs:domain bv:AthletePerfomance ;
               rdfs:range xsd:integer ;
-              rdfs:comment "Points accumulated by this associate. For example, points earned by a NASCAR owner."@en ;
-              rdfs:label "points"@en .
+              rdfs:comment "The number of receptions made by an athlete in a match."@en ;
+              rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+              rdfs:label "receptions"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/pointsDifference
-spstat:pointsDifference rdf:type owl:DatatypeProperty ;
-                        rdfs:domain sport:Participation ;
-                        rdfs:range xsd:integer ;
-                        rdfs:comment "The final calculated difference between points-scored-for and points-scored-against. Possibly takes into account other scoring aspects, such as penalties and differences in score-values."@en ;
-                        rdfs:label "pointsDifference"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/serveErrors
+bv:serveErrors rdf:type owl:DatatypeProperty ;
+               rdfs:domain bv:AthletePerfomance ;
+               rdfs:range xsd:integer ;
+               rdfs:comment "The number of serve errors made by an athlete in a match."@en ;
+               rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+               rdfs:label "serve errors"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/pointsScoredAgainst
-spstat:pointsScoredAgainst rdf:type owl:DatatypeProperty ;
-                           rdfs:domain sport:Participation ;
-                           rdfs:range xsd:integer ;
-                           rdfs:comment "The number of points scored against a team by its opponents during an extended time period."@en ;
-                           rdfs:label "pointsScoredAgainst"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/serves
+bv:serves rdf:type owl:DatatypeProperty ;
+          rdfs:domain bv:AthletePerfomance ;
+          rdfs:range xsd:integer ;
+          rdfs:comment "The number of serves made by an athlete in a match."@en ;
+          rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+          rdfs:label "serves"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/pointsScoredFor
-spstat:pointsScoredFor rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Participation ;
-                       rdfs:range xsd:integer ;
-                       rdfs:comment "The number of points a team has scored against its opponents during an extended time period."@en ;
-                       rdfs:label "pointsScoredFor"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/rating
-spstat:rating rdf:type owl:DatatypeProperty ;
-              rdfs:domain sport:Participation ;
-              rdfs:range xsd:string ;
-              rdfs:comment "A judged value placed on the team or individual. Often used in British soccer."@en ;
-              rdfs:label "rating"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/relegationAverage
-spstat:relegationAverage rdf:type owl:DatatypeProperty ;
-                         rdfs:domain sport:Participation ;
-                         rdfs:range xsd:integer ;
-                         rdfs:comment "The product of a relegation average formula used to determine which team is demoted to a lower league. The formula may vary by league but the average typically looks at team performance across multiple competitions. The team(s) with the lowest relegation averages is sent to the league below."@en ;
-                         rdfs:label "relegationAverage"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/resultEffect
-spstat:resultEffect rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Participation ;
-                    rdfs:range xsd:anyURI ;
-                    rdfs:comment "Describes the effect that the result of the event or rank changing has had on the team. Example: Whether or not a team has qualified for the playoffs, or has been promoted or demoted to a different division. Value should come from the https://cv.iptc.org/newscodes/spresulteffect/ vocabulary"@en ;
-                    rdfs:label "resultEffect"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/resultEffectTarget
-spstat:resultEffectTarget rdf:type owl:DatatypeProperty .
-
-
-###  https://sportschema.org/ontologies/corestatistics/score
-spstat:score rdf:type owl:DatatypeProperty ;
-             rdfs:domain sport:Participation ;
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/setErrors
+bv:setErrors rdf:type owl:DatatypeProperty ;
+             rdfs:domain bv:AthletePerfomance ;
              rdfs:range xsd:integer ;
-             rdfs:comment "Final or current score of the team or player."@en ;
-             rdfs:label "score"@en .
+             rdfs:comment "The number of set errors made by an athlete in a match."@en ;
+             rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+             rdfs:label "set errors"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/scoreAttempts
-spstat:scoreAttempts rdf:type owl:DatatypeProperty ;
-                     rdfs:domain sport:Participation ;
-                     rdfs:range xsd:integer ;
-                     rdfs:comment "Final or current number of attempts to score by a team or player. Example: in ice hockey, would represent total shots on goal."@en ;
-                     rdfs:label "scoreAttempts"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/sets
+bv:sets rdf:type owl:DatatypeProperty ;
+        rdfs:domain bv:AthletePerfomance ;
+        rdfs:range xsd:integer ;
+        rdfs:comment "The number of sets won by an athlete in a match."@en ;
+        rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+        rdfs:label "sets"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/scoreAttemptsOnGoal
-spstat:scoreAttemptsOnGoal rdf:type owl:DatatypeProperty ;
-                           rdfs:domain sport:Participation ;
-                           rdfs:range xsd:integer ;
-                           rdfs:comment "A subset of score-attempts. Only counts those attempts that were on-goal."@en ;
-                           rdfs:label "scoreAttemptsOnGoal"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scoreAttemptsOnGoalOpposing
-spstat:scoreAttemptsOnGoalOpposing rdf:type owl:DatatypeProperty ;
-                                   rdfs:domain sport:Participation ;
-                                   rdfs:range xsd:integer ;
-                                   rdfs:comment "Final or current number of attempts to score by an opposing team or player that were on-goal."@en ;
-                                   rdfs:label "scoreAttemptsOnGoalOpposing"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scoreAttemptsOpposing
-spstat:scoreAttemptsOpposing rdf:type owl:DatatypeProperty ;
-                             rdfs:domain sport:Participation ;
-                             rdfs:range xsd:integer ;
-                             rdfs:comment "Final or current number of attempts to score by an opposing team or player."@en ;
-                             rdfs:label "scoreAttemptsOpposing"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scoreAverage
-spstat:scoreAverage rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Participation ;
-                    rdfs:range xsd:integer ;
-                    rdfs:comment "Average per-game score for the team or player."@en ;
-                    rdfs:label "scoreAverage"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scoreBehind
-spstat:scoreBehind rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Participation ;
-                   rdfs:range xsd:integer ;
-                   rdfs:comment "The points or time behind the leading score."@en ;
-                   rdfs:label "scoreBehind"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scoreOpposing
-spstat:scoreOpposing rdf:type owl:DatatypeProperty ;
-                     rdfs:domain sport:Participation ;
-                     rdfs:range xsd:integer ;
-                     rdfs:comment "Final or current score of the opposing team or player."@en ;
-                     rdfs:label "scoreOpposing"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scoreOpposingAverage
-spstat:scoreOpposingAverage rdf:type owl:DatatypeProperty ;
-                            rdfs:domain sport:Participation ;
-                            rdfs:range xsd:integer ;
-                            rdfs:comment "Average per-game score for the opposing team or player."@en ;
-                            rdfs:label "scoreOpposingAverage"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scorePercentage
-spstat:scorePercentage rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Participation ;
-                       rdfs:range xsd:integer ;
-                       rdfs:comment "Percentage of attempted scores that reached their mark."@en ;
-                       rdfs:label "scorePercentage"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/scorePercentageOpposing
-spstat:scorePercentageOpposing rdf:type owl:DatatypeProperty ;
-                               rdfs:domain sport:Participation ;
-                               rdfs:range xsd:integer ;
-                               rdfs:comment "Percentage of attempted scores by opposing team or player that reached their mark."@en ;
-                               rdfs:label "scorePercentageOpposing"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/seriesScore
-spstat:seriesScore rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Participation ;
-                   rdfs:range xsd:integer ;
-                   rdfs:comment "Number of events in a series won by team or player."@en ;
-                   rdfs:label "seriesScore"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/seriesScoreOpposing
-spstat:seriesScoreOpposing rdf:type owl:DatatypeProperty ;
-                           rdfs:domain sport:Participation ;
-                           rdfs:range xsd:integer ;
-                           rdfs:comment "Number of events in a series won by opposing team or player."@en ;
-                           rdfs:label "seriesScoreOpposing"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/standingPoints
-spstat:standingPoints rdf:type owl:DatatypeProperty ;
-                      rdfs:domain sport:Participation ;
-                      rdfs:range xsd:integer ;
-                      rdfs:comment "A quantity used to rank teams, usually within a division, in order to decide who comes in first at the end of a season. Localized to the coverage-attributes."@en ;
-                      rdfs:label "standingPoints"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/standingPointsAgainst
-spstat:standingPointsAgainst rdf:type owl:DatatypeProperty ;
-                             rdfs:domain sport:Participation ;
-                             rdfs:range xsd:integer ;
-                             rdfs:comment "Points counted against a team in rankings. Used in European handball standings, for example."@en ;
-                             rdfs:label "standingPointsAgainst"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/streakDuration
-spstat:streakDuration rdf:type owl:DatatypeProperty ;
-                      rdfs:domain sport:Participation ;
-                      rdfs:range xsd:integer ;
-                      rdfs:comment "How long the streak lasted."@en ;
-                      rdfs:label "streakDuration"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/streakEnd
-spstat:streakEnd rdf:type owl:DatatypeProperty ;
-                 rdfs:domain sport:Participation ;
-                 rdfs:range xsd:integer ;
-                 rdfs:comment "Date on which the streak ended."@en ;
-                 rdfs:label "streakEnd"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/streakStart
-spstat:streakStart rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Participation ;
-                   rdfs:range xsd:integer ;
-                   rdfs:comment "Date on which the streak began."@en ;
-                   rdfs:label "streakStart"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/streakTotal
-spstat:streakTotal rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Participation ;
-                   rdfs:range xsd:integer ;
-                   rdfs:comment "Holds the number of goals scored during a streak-type of score, for example."@en ;
-                   rdfs:label "streakTotal"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/ties
-spstat:ties rdf:type owl:DatatypeProperty ;
-            rdfs:domain sport:Participation ;
-            rdfs:range xsd:integer ;
-            rdfs:comment "Number of ties."@en ;
-            rdfs:label "ties"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timeOfPossession
-spstat:timeOfPossession rdf:type owl:DatatypeProperty ;
-                        rdfs:domain sport:Participation ;
-                        rdfs:range xsd:integer ;
-                        rdfs:comment "Amount of time the team or player has possession of ball (or similar object like puck)."@en ;
-                        rdfs:label "timeOfPossession"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timeOfPossessionAverage
-spstat:timeOfPossessionAverage rdf:type owl:DatatypeProperty ;
-                               rdfs:domain sport:Participation ;
-                               rdfs:range xsd:integer ;
-                               rdfs:comment "Amount of time the team or player has possession of ball (or similar object like puck) per game."@en ;
-                               rdfs:label "timeOfPossessionAverage"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timeOfPossessionAverageOpposing
-spstat:timeOfPossessionAverageOpposing rdf:type owl:DatatypeProperty ;
-                                       rdfs:domain sport:Participation ;
-                                       rdfs:range xsd:integer ;
-                                       rdfs:comment "Amount of time the opposing team or player has possession of ball (or similar object like puck) per game."@en ;
-                                       rdfs:label "timeOfPossessionAverageOpposing"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timeOfPossessionPercentage
-spstat:timeOfPossessionPercentage rdf:type owl:DatatypeProperty ;
-                                  rdfs:domain sport:Participation ;
-                                  rdfs:range xsd:integer ;
-                                  rdfs:comment "Amount of time the team or player has possession of ball (or similar object like puck) expressed as a percentage of the full time of the match."@en ;
-                                  rdfs:label "timeOfPossessionPercentage"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timeOfPossessionPercentageOpposing
-spstat:timeOfPossessionPercentageOpposing rdf:type owl:DatatypeProperty ;
-                                          rdfs:domain sport:Participation ;
-                                          rdfs:range xsd:integer ;
-                                          rdfs:comment "Amount of time the opposing team or player has possession of ball (or similar object like puck) expressed as a percentage of the full time of the match."@en ;
-                                          rdfs:label "timeOfPossessionPercentageOpposing"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timePlayedEvent
-spstat:timePlayedEvent rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Participation ;
-                       rdfs:range xsd:integer ;
-                       rdfs:comment "Value for the amount of time played by this player in a particular sports-event."@en ;
-                       rdfs:label "timePlayedEvent"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timePlayedEventAverage
-spstat:timePlayedEventAverage rdf:type owl:DatatypeProperty ;
-                              rdfs:domain sport:Participation ;
-                              rdfs:range xsd:integer ;
-                              rdfs:comment "Value for the average amount of time played per-event by the player over the course of a particular time-span, such as a season."@en ;
-                              rdfs:label "timePlayedEventAverage"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/timePlayedTotal
-spstat:timePlayedTotal rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Participation ;
-                       rdfs:range xsd:integer ;
-                       rdfs:comment "Value for the amount of time played by the team or player over the course of a particular time-span, such as a season."@en ;
-                       rdfs:label "timePlayedTotal"@en .
-
-
-###  https://sportschema.org/ontologies/corestatistics/undecideds
-spstat:undecideds rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Participation ;
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/winningAttacks
+bv:winningAttacks rdf:type owl:DatatypeProperty ;
+                  rdfs:domain bv:AthletePerfomance ;
                   rdfs:range xsd:integer ;
-                  rdfs:comment "Number of events that were started, but ended up undecided."@en ;
-                  rdfs:label "undecideds"@en .
+                  rdfs:comment "The number of winning attacks made by an athlete in a match."@en ;
+                  rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                  rdfs:label "winning attacks"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/winningPercentage
-spstat:winningPercentage rdf:type owl:DatatypeProperty ;
-                         rdfs:domain sport:Participation ;
-                         rdfs:range xsd:integer ;
-                         rdfs:comment "The winning percentage. Generally, wins divided by total events completed."@en ;
-                         rdfs:label "winningPercentage"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/winningBlocks
+bv:winningBlocks rdf:type owl:DatatypeProperty ;
+                 rdfs:domain bv:AthletePerfomance ;
+                 rdfs:range xsd:integer ;
+                 rdfs:comment "The number of winning blocks made by an athlete in a match."@en ;
+                 rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                 rdfs:label "winning blocks"@en .
 
 
-###  https://sportschema.org/ontologies/corestatistics/wins
-spstat:wins rdf:type owl:DatatypeProperty ;
-            rdfs:domain sport:Participation ;
-            rdfs:range xsd:integer ;
-            rdfs:comment "Number of wins."@en ;
-            rdfs:label "wins"@en .
-
-
-###  https://sportschema.org/ontologies/main/actionDateTime
-sport:actionDateTime rdf:type owl:DatatypeProperty ;
-                     rdfs:domain sport:Action ;
-                     rdfs:range xsd:dateTime ;
-                     rdfs:comment "Date and time when this play/action took place on the field."@en ;
-                     rdfs:isDefinedBy sport: ;
-                     rdfs:label "action date-time"@en .
-
-
-###  https://sportschema.org/ontologies/main/actionType
-sport:actionType rdf:type owl:DatatypeProperty ;
-                 rdfs:domain sport:Action ;
-                 rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                 rdfs:comment "The type of competitive action taken on the field of play. See 'action' SportsML vocabs for various sports: http://cv.iptc.org/newscodes/spamfaction/ http://cv.iptc.org/newscodes/spbblaction/ http://cv.iptc.org/newscodes/spbkbaction/ http://cv.iptc.org/newscodes/spichaction/ http://cv.iptc.org/newscodes/spmcraction/ http://cv.iptc.org/newscodes/rgxaction/ http://cv.iptc.org/newscodes/spsocaction/ http://cv.iptc.org/newscodes/sptenaction/"@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "action type"@en .
-
-
-###  https://sportschema.org/ontologies/main/alignment
-sport:alignment rdf:type owl:DatatypeProperty ;
-                rdfs:domain sport:TeamParticipation ;
-                rdfs:range xsd:anyURI ;
-                rdfs:comment "The association between a Team and a Site, e.g. 'home' or 'away'"@en ;
-                rdfs:isDefinedBy sport: ;
-                rdfs:label "alignment"@en .
-
-
-###  https://sportschema.org/ontologies/main/angle
-sport:angle rdf:type owl:DatatypeProperty ;
-            rdfs:domain sport:Action ;
-            rdfs:range xsd:string ;
-            rdfs:comment "Angle on the field of the play."@en ;
-            rdfs:isDefinedBy sport: ;
-            rdfs:label "angle"@en .
-
-
-###  https://sportschema.org/ontologies/main/attendance
-sport:attendance rdf:type owl:DatatypeProperty ;
-                 rdfs:domain sport:Event ;
-                 rdfs:range xsd:string ;
-                 rdfs:comment "The number of people attending an event"@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "attendance"@en .
-
-
-###  https://sportschema.org/ontologies/main/bodyPart
-sport:bodyPart rdf:type owl:DatatypeProperty ;
-               rdfs:domain sport:Action ;
-               rdfs:range xsd:string ;
-               rdfs:comment "Body part used to perform an action."@en ;
-               rdfs:isDefinedBy sport: ;
-               rdfs:label "body part"@en .
-
-
-###  https://sportschema.org/ontologies/main/class
-sport:class rdf:type owl:DatatypeProperty ;
-            rdfs:domain sport:Action ;
-            rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-            rdfs:comment "An open placeholder for categorization. Recommended vocabulary: http://cv.iptc.org/newscodes/spactionclass/"@en ;
-            rdfs:isDefinedBy sport: ;
-            rdfs:label "class"@en .
-
-
-###  https://sportschema.org/ontologies/main/comment
-sport:comment rdf:type owl:DatatypeProperty ;
-              rdfs:domain sport:Action ;
-              rdfs:range xsd:string ;
-              rdfs:comment "Textual comment of the action"@en ;
-              rdfs:isDefinedBy sport: ;
-              rdfs:label "comment"@en .
-
-
-###  https://sportschema.org/ontologies/main/competitionFormat
-sport:competitionFormat rdf:type owl:DatatypeProperty ;
-                        rdfs:domain sport:CompetitionPhase ;
-                        rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                        rdfs:comment "Competition format: round robin, sudden death etc"@en ;
-                        rdfs:isDefinedBy sport: ;
-                        rdfs:label "competition form"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/winningServes
+bv:winningServes rdf:type owl:DatatypeProperty ;
+                 rdfs:domain bv:AthletePerfomance ;
+                 rdfs:range xsd:integer ;
+                 rdfs:comment "The number of winning serves made by an athlete in a match."@en ;
+                 rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                 rdfs:label "winning serves"@en .
 
 
 ###  https://sportschema.org/ontologies/main/competitionPhaseType
-sport:competitionPhaseType rdf:type owl:DatatypeProperty ;
-                           rdfs:domain sport:CompetitionPhase ;
-                           rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                           rdfs:comment "Type of the competition phase - regular week, final etc"@en ;
-                           rdfs:isDefinedBy sport: ;
-                           rdfs:label "competition phase type"@en .
+sport:competitionPhaseType rdf:type owl:DatatypeProperty .
 
 
 ###  https://sportschema.org/ontologies/main/competitionType
-sport:competitionType rdf:type owl:DatatypeProperty ;
-                      rdfs:domain sport:Competition ;
-                      rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                      rdfs:comment "The type of a Competition, e.g. spct:recurring-competition or spct:competition"@en ;
-                      rdfs:isDefinedBy sport: ;
-                      rdfs:label "competition type"@en .
-
-
-###  https://sportschema.org/ontologies/main/dateOfBirth
-sport:dateOfBirth rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Individual ;
-                  rdfs:range xsd:date ;
-                  rdfs:comment "The date of birth of a person"@en ;
-                  rdfs:isDefinedBy sport: ;
-                  rdfs:label "date of birth"@en .
-
-
-###  https://sportschema.org/ontologies/main/distance
-sport:distance rdf:type owl:DatatypeProperty ;
-               rdfs:domain sport:Action ;
-               rdfs:range xsd:string ;
-               rdfs:comment "Distance of the action."@en ;
-               rdfs:isDefinedBy sport: ;
-               rdfs:label "distance"@en .
-
-
-###  https://sportschema.org/ontologies/main/endDate
-sport:endDate rdf:type owl:DatatypeProperty ;
-              rdfs:domain sport:Membership ;
-              rdfs:range xsd:date ;
-              rdfs:comment "The date on which a membership ends"@en ;
-              rdfs:isDefinedBy sport: ;
-              rdfs:label "end date"@en .
+sport:competitionType rdf:type owl:DatatypeProperty .
 
 
 ###  https://sportschema.org/ontologies/main/endDateTime
 sport:endDateTime rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Event ;
+                  rdfs:domain sport:Match ;
                   rdfs:range xsd:dateTime ;
-                  rdfs:comment "The date and time at which an event ends"@en ;
+                  rdfs:comment "The date and time at which a match ends."@en ;
                   rdfs:isDefinedBy sport: ;
                   rdfs:label "end datetime"@en .
 
 
-###  https://sportschema.org/ontologies/main/endLocation
-sport:endLocation rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Action ;
-                  rdfs:range xsd:string ;
-                  rdfs:comment "A string indicating where on the court the action occured. Could be an approximate region, or a more complex value adhering to some elaborate coordinate system."@en ;
-                  rdfs:isDefinedBy sport: ;
-                  rdfs:label "end location"@en .
-
-
-###  https://sportschema.org/ontologies/main/eventOutcome
-sport:eventOutcome rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:CompetitorParticipation ;
-                   rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                   rdfs:comment "The outcome of an event (win, loss etc)"@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "event outcome"@en .
-
-
-###  https://sportschema.org/ontologies/main/eventOutcomeType
-sport:eventOutcomeType rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:CompetitorParticipation ;
-                       rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                       rdfs:comment "The type of outcome of an event (win, loss etc)"@en ;
-                       rdfs:isDefinedBy sport: ;
-                       rdfs:label "event outcome type"@en .
-
-
-###  https://sportschema.org/ontologies/main/eventStatus
-sport:eventStatus rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Event ;
-                  rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                  rdfs:comment "Event's current status (e.g. post-event)"@en ;
-                  rdfs:isDefinedBy sport: ;
-                  rdfs:label "event status"@en .
-
-
-###  https://sportschema.org/ontologies/main/fieldLocation
-sport:fieldLocation rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Action ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment "Recommended x,y 0-100. The location of the action on the field of play represented as a grid."@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "field location"@en .
-
-
-###  https://sportschema.org/ontologies/main/goalLocation
-sport:goalLocation rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Action ;
-                   rdfs:range xsd:string ;
-                   rdfs:comment "Recommended x,y 0-100. The location on goal-mouth grid in which the ball/puck entered."@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "goal location"@en .
-
-
-###  https://sportschema.org/ontologies/main/infractionLevel
-sport:infractionLevel rdf:type owl:DatatypeProperty ;
-                      rdfs:domain sport:Action ;
-                      rdfs:range xsd:string ;
-                      rdfs:comment "Level of infraction (aka penalty)"@en ;
-                      rdfs:isDefinedBy sport: ;
-                      rdfs:label "infraction level"@en .
-
-
-###  https://sportschema.org/ontologies/main/infractionType
-sport:infractionType rdf:type owl:DatatypeProperty ;
-                     rdfs:domain sport:Action ;
-                     rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                     rdfs:comment "The degree of punishment for the infraction/penalty eg. yellow or red card, major, minor, game misconduct, etc. See 'penaltylevel' SportsML vocabs for various sports: http://cv.iptc.org/newscodes/spbkbpenaltylevel/ http://cv.iptc.org/newscodes/spichpenaltylevel/ http://cv.iptc.org/newscodes/sprgxpenaltylevel/ http://cv.iptc.org/newscodes/spsocpenaltylevel/"@en ;
-                     rdfs:isDefinedBy sport: ;
-                     rdfs:label "infraction type"@en .
-
-
-###  https://sportschema.org/ontologies/main/lastModified
-sport:lastModified rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Action ;
-                   rdfs:range xsd:string ;
-                   rdfs:comment "Date and time when this play/action record was last modified. This would be the record from the reporter's data entry system."@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "last modified"@en .
-
-
-###  https://sportschema.org/ontologies/main/membershipStatus
-sport:membershipStatus rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:IndividualMembership ;
-                       rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                       rdfs:comment "Member's status in a team during this membership period (e.g. active or inactive)"@en ;
-                       rdfs:isDefinedBy sport: ;
-                       rdfs:label "membership status"@en .
-
-
-###  https://sportschema.org/ontologies/main/minutesElapsed
-sport:minutesElapsed rdf:type owl:DatatypeProperty ;
-                     rdfs:domain sport:Action ;
-                     rdfs:range xsd:string ;
-                     rdfs:comment "Game minutes elapsed when this action occurred"@en ;
-                     rdfs:isDefinedBy sport: ;
-                     rdfs:label "minutes elapsed"@en .
-
-
-###  https://sportschema.org/ontologies/main/nationality
-sport:nationality rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Individual ;
-                  rdfs:range xsd:string ;
-                  rdfs:comment "The country an individual is identified with"@en ;
-                  rdfs:isDefinedBy sport: ;
-                  rdfs:label "nationality"@en .
-
-
-###  https://sportschema.org/ontologies/main/participationSplitType
-sport:participationSplitType rdf:type owl:DatatypeProperty ;
-                             rdfs:domain sport:ParticipationSplit ;
-                             rdfs:range xsd:anyURI ;
-                             rdfs:comment "The type of a participation split, e.g. 'home games' or 'first half'"@en ;
-                             rdfs:isDefinedBy sport: ;
-                             rdfs:label "participation split type"@en .
-
-
-###  https://sportschema.org/ontologies/main/passDescription
-sport:passDescription rdf:type owl:DatatypeProperty ;
-                      rdfs:domain sport:Action ;
-                      rdfs:range xsd:string ;
-                      rdfs:comment "description of the pass taken in this action"@en ;
-                      rdfs:isDefinedBy sport: ;
-                      rdfs:label "pass description"@en .
-
-
-###  https://sportschema.org/ontologies/main/passMethod
-sport:passMethod rdf:type owl:DatatypeProperty ;
-                 rdfs:domain sport:Action ;
-                 rdfs:range xsd:string ;
-                 rdfs:comment "Method used in this pass"@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "pass method"@en .
-
-
-###  https://sportschema.org/ontologies/main/passType
-sport:passType rdf:type owl:DatatypeProperty ;
-               rdfs:domain sport:Action ;
-               rdfs:range xsd:string ;
-               rdfs:comment "Type of this pass"@en ;
-               rdfs:isDefinedBy sport: ;
-               rdfs:label "pass type"@en .
-
-
-###  https://sportschema.org/ontologies/main/periodValue
-sport:periodValue rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Action ;
-                  rdfs:range xsd:string ;
-                  rdfs:comment "Used for tracking stats and events by period."@en ;
-                  rdfs:isDefinedBy sport: ;
-                  rdfs:label "period value"@en .
-
-
-###  https://sportschema.org/ontologies/main/personReplacingPosition
-sport:personReplacingPosition rdf:type owl:DatatypeProperty ;
-                              rdfs:domain sport:Action ;
-                              rdfs:range xsd:string ;
-                              rdfs:comment "The position role assumed by the substitute."@en ;
-                              rdfs:isDefinedBy sport: ;
-                              rdfs:label "person replacing position"@en .
-
-
-###  https://sportschema.org/ontologies/main/playerStatus
-sport:playerStatus rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:IndividualParticipation ;
-                   rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                   rdfs:comment "Player status for a given event (e.g. starter or bench)"@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "player status"@en .
-
-
-###  https://sportschema.org/ontologies/main/positionEvent
-sport:positionEvent rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:CompetitorParticipation ;
-                    rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                    rdfs:comment "The position in a team taken for an individual event"@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "position (event)"@en .
-
-
-###  https://sportschema.org/ontologies/main/positionRegular
-sport:positionRegular rdf:type owl:DatatypeProperty ;
-                      rdfs:domain sport:IndividualMembership ;
-                      rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                      rdfs:comment "The position in a team usually taken by a given player or associate"@en ;
-                      rdfs:isDefinedBy sport: ;
-                      rdfs:label "position (regular)"@en .
-
-
-###  https://sportschema.org/ontologies/main/rank
-sport:rank rdf:type owl:DatatypeProperty ;
-           rdfs:domain sport:CompetitorParticipation ;
-           rdfs:range xsd:string ;
-           rdfs:comment "The rank of a player or team in standings etc."@en ;
-           rdfs:isDefinedBy sport: ;
-           rdfs:label "rank"@en .
-
-
-###  https://sportschema.org/ontologies/main/recipientType
-sport:recipientType rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Action ;
-                    rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                    rdfs:comment "Whether the receiver of the penalty was the team, the player, a coach, a ref, etc. SportsML vocab uri: http://cv.iptc.org/newscodes/sprecipienttype/"@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "recipient type"@en .
-
-
-###  https://sportschema.org/ontologies/main/result
-sport:result rdf:type owl:DatatypeProperty ;
-             rdfs:domain sport:Action ;
-             rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-             rdfs:comment "The result of the play or action. See 'result' SportsML vocabs for various sports: http://cv.iptc.org/newscodes/spamfresult/ http://cv.iptc.org/newscodes/spsocresult/"@en ;
-             rdfs:isDefinedBy sport: ;
-             rdfs:label "result"@en .
-
-
-###  https://sportschema.org/ontologies/main/role
-sport:role rdf:type owl:DatatypeProperty ;
-           rdfs:domain sport:Participation ;
-           rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-           rdfs:comment "A team's or individual's role in a given action"@en ;
-           rdfs:isDefinedBy sport: ;
-           rdfs:label "role"@en .
-
-
-###  https://sportschema.org/ontologies/main/saveMethod
-sport:saveMethod rdf:type owl:DatatypeProperty ;
-                 rdfs:domain sport:Action ;
-                 rdfs:range xsd:string ;
-                 rdfs:comment "method used for this save"@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "save method"@en .
-
-
-###  https://sportschema.org/ontologies/main/saveType
-sport:saveType rdf:type owl:DatatypeProperty ;
-               rdfs:domain sport:Action ;
-               rdfs:range xsd:string ;
-               rdfs:comment "type of save performed in this action"@en ;
-               rdfs:isDefinedBy sport: ;
-               rdfs:label "save type"@en .
+###  https://sportschema.org/ontologies/main/matchOutcome
+sport:matchOutcome rdf:type owl:DatatypeProperty .
 
 
 ###  https://sportschema.org/ontologies/main/score
 sport:score rdf:type owl:DatatypeProperty ;
-            rdfs:domain sport:CompetitorParticipation ;
+            rdfs:domain sport:TeamParticipation ;
             rdfs:range xsd:string ;
-            rdfs:comment "Final or current score of the team or individual"@en ;
+            rdfs:comment "Final score of the team."@en ;
             rdfs:isDefinedBy sport: ;
             rdfs:label "score"@en .
 
 
-###  https://sportschema.org/ontologies/main/scoreAttemptResult
-sport:scoreAttemptResult rdf:type owl:DatatypeProperty ;
-                         rdfs:domain sport:Action ;
-                         rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                         rdfs:comment "The result of the score attempt eg. blocked, missed, etc. See 'scoreattemptresult' SportsML vocabs for various sports: http://cv.iptc.org/newscodes/spbkbscoreattemptresult/ http://cv.iptc.org/newscodes/spichscoreattemtresult/ http://cv.iptc.org/newscodes/sprgxscoreattemptresult/ http://cv.iptc.org/newscodes/spsocscoreattemptresult/"@en ;
-                         rdfs:isDefinedBy sport: ;
-                         rdfs:label "score attempt result"@en .
-
-
-###  https://sportschema.org/ontologies/main/scoreAttemptSide
-sport:scoreAttemptSide rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Action ;
-                       rdfs:range xsd:string ;
-                       rdfs:comment "Side of the body of the player attempting to score"@en ;
-                       rdfs:isDefinedBy sport: ;
-                       rdfs:label "score attempt side"@en .
-
-
-###  https://sportschema.org/ontologies/main/scoreAttemptSituation
-sport:scoreAttemptSituation rdf:type owl:DatatypeProperty ;
-                            rdfs:domain sport:Action ;
-                            rdfs:range xsd:string ;
-                            rdfs:comment "Describing the situation surrounding the score attempt"@en ;
-                            rdfs:isDefinedBy sport: ;
-                            rdfs:label "score attempt situation"@en .
-
-
-###  https://sportschema.org/ontologies/main/scoreAttemptType
-sport:scoreAttemptType rdf:type owl:DatatypeProperty ;
-                       rdfs:domain sport:Action ;
-                       rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                       rdfs:comment "The type of score that was attempted. See 'scoreattempt' SportsML vocabs for various sports: http://cv.iptc.org/newscodes/spbkbscoreattempt/ http://cv.iptc.org/newscodes/spichscoreattempt/ http://cv.iptc.org/newscodes/sprgxscoreattempt/ http://cv.iptc.org/newscodes/spsocscoreattempt/"@en ;
-                       rdfs:isDefinedBy sport: ;
-                       rdfs:label "score attempt type"@en .
-
-
-###  https://sportschema.org/ontologies/main/scoreType
-sport:scoreType rdf:type owl:DatatypeProperty ;
-                rdfs:domain sport:CompetitorParticipation ;
-                rdfs:range xsd:string ;
-                rdfs:comment "Qualifies the 'score' property."@en ;
-                rdfs:isDefinedBy sport: ;
-                rdfs:label "score type"@en .
-
-
-###  https://sportschema.org/ontologies/main/scoreUnits
-sport:scoreUnits rdf:type owl:DatatypeProperty ;
-                 rdfs:domain sport:CompetitorParticipation ;
-                 rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                 rdfs:comment "The units of a team's or individual's score in a given event (e.g. metres or seconds)"@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "score units"@en .
-
-
-###  https://sportschema.org/ontologies/main/sequenceNumber
-sport:sequenceNumber rdf:type owl:DatatypeProperty ;
-                     rdfs:domain sport:Action ;
-                     rdfs:range xsd:string ;
-                     rdfs:comment "Sequence-number. Should be separate sequences for sub-actions inside an action"@en ;
-                     rdfs:isDefinedBy sport: ;
-                     rdfs:label "sequence number"@en .
-
-
-###  https://sportschema.org/ontologies/main/shotDistance
-sport:shotDistance rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Action ;
-                   rdfs:range xsd:string ;
-                   rdfs:comment "Distance of the shot"@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "shot distance"@en .
-
-
-###  https://sportschema.org/ontologies/main/shotDistanceUnits
-sport:shotDistanceUnits rdf:type owl:DatatypeProperty ;
-                        rdfs:domain sport:Action ;
-                        rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-                        rdfs:comment "SportsML vocab uri: http://cv.iptc.org/newscodes/spdistanceunits/"@en ;
-                        rdfs:isDefinedBy sport: ;
-                        rdfs:label "shot distance units"@en .
-
-
-###  https://sportschema.org/ontologies/main/shotType
-sport:shotType rdf:type owl:DatatypeProperty ;
-               rdfs:domain sport:Action ;
-               rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> ;
-               rdfs:comment "The type of shot taken. See 'shot' SportsML vocabs for various sports: http://cv.iptc.org/newscodes/spgolshot/ http://cv.iptc.org/newscodes/sptenshot/ http://cv.iptc.org/newscodes/spcurshot/"@en ;
-               rdfs:isDefinedBy sport: ;
-               rdfs:label "shot type"@en .
-
-
-###  https://sportschema.org/ontologies/main/sport
-sport:sport rdf:type owl:DatatypeProperty ;
-            rdfs:domain sport:Competition ;
-            rdfs:range xsd:anyURI ,
-                       <http://www.w3.org/2004/02/skos/core#Concept> ;
-            rdfs:comment "The sport which this competition represents"@en ;
-            rdfs:isDefinedBy sport: ;
-            rdfs:label "sport"@en .
-
-
-###  https://sportschema.org/ontologies/main/startDate
-sport:startDate rdf:type owl:DatatypeProperty ;
-                rdfs:domain sport:Membership ;
-                rdfs:range xsd:date ;
-                rdfs:comment "The date on which a membership begins"@en ;
-                rdfs:isDefinedBy sport: ;
-                rdfs:label "start date"@en .
-
-
 ###  https://sportschema.org/ontologies/main/startDateTime
 sport:startDateTime rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Event ;
+                    rdfs:domain sport:Match ;
                     rdfs:range xsd:dateTime ;
-                    rdfs:comment "The date and time at which an event begins"@en ;
+                    rdfs:comment "The date and time at which a match begins"@en ;
                     rdfs:isDefinedBy sport: ;
                     rdfs:label "start datetime"@en .
-
-
-###  https://sportschema.org/ontologies/main/startLocation
-sport:startLocation rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Action ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment ">A string indicating where on the court the action began. Could be an approximate region, or a more complex value adhering to some elaborate coordinate system."@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "start location"@en .
-
-
-###  https://sportschema.org/ontologies/main/substitutionReason
-sport:substitutionReason rdf:type owl:DatatypeProperty ;
-                         rdfs:domain sport:Action ;
-                         rdfs:range xsd:string ;
-                         rdfs:comment "The reason for the substitution of a player"@en ;
-                         rdfs:isDefinedBy sport: ;
-                         rdfs:label "substitution reason"@en .
-
-
-###  https://sportschema.org/ontologies/main/timeAddition
-sport:timeAddition rdf:type owl:DatatypeProperty ;
-                   rdfs:domain sport:Action ;
-                   rdfs:range xsd:string ;
-                   rdfs:comment "time added to period."@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "time addition"@en .
-
-
-###  https://sportschema.org/ontologies/main/timeElapsed
-sport:timeElapsed rdf:type owl:DatatypeProperty ;
-                  rdfs:domain sport:Action ;
-                  rdfs:range xsd:string ;
-                  rdfs:comment "Total time elapsed of event"@en ;
-                  rdfs:isDefinedBy sport: ;
-                  rdfs:label "time elapsed"@en .
-
-
-###  https://sportschema.org/ontologies/main/timeRemaining
-sport:timeRemaining rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:Action ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment "Time remaining of event"@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "time remaining"@en .
-
-
-###  https://sportschema.org/ontologies/main/uniformNumber
-sport:uniformNumber rdf:type owl:DatatypeProperty ;
-                    rdfs:domain sport:IndividualMembership ;
-                    rdfs:range xsd:string ;
-                    rdfs:comment "The number usually worn on a player's uniform (jersey etc.) Note that the value may be a string such as 'unknown'."@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "uniform number"@en .
-
-
-###  https://sportschema.org/ontologies/main/uniformNumberEvent
-sport:uniformNumberEvent rdf:type owl:DatatypeProperty ;
-                         rdfs:domain sport:IndividualParticipation ;
-                         rdfs:range xsd:string ;
-                         rdfs:comment "The number worn on a player's uniform (jersey etc.) for an individual event. Note that the value may be a string such as 'unknown'."@en ;
-                         rdfs:isDefinedBy sport: ;
-                         rdfs:label "uniform number event"@en .
-
-
-###  https://sportschema.org/ontologies/main/zone
-sport:zone rdf:type owl:DatatypeProperty ;
-           rdfs:domain sport:Action ;
-           rdfs:range xsd:string ;
-           rdfs:comment "The zone on the playing field where the action took place. Value can be sport specific"@en ;
-           rdfs:isDefinedBy sport: ;
-           rdfs:label "zone"@en .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-###  https://sportschema.org/ontologies/main/Action
-sport:Action rdf:type owl:Class ;
-             rdfs:subClassOf sport:ParticipatableThing ;
-             rdfs:comment "Something that happens during an event: a kick, a goal, a foul etc"@en ;
-             rdfs:isDefinedBy sport: ;
-             rdfs:label "Action"@en .
+###  http://www.w3.org/2004/02/skos/core#Concept
+<http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
 
 
-###  https://sportschema.org/ontologies/main/Agent
-sport:Agent rdf:type owl:Class ;
-            rdfs:comment "A participant in a sport event."@en ;
-            rdfs:isDefinedBy sport: ;
-            rdfs:label "Agent"@en .
-
-
-###  https://sportschema.org/ontologies/main/Associate
-sport:Associate rdf:type owl:Class ;
-                rdfs:subClassOf sport:Individual ;
-                rdfs:comment "A person assisting competitor(s) in an event but not competing themselves, e.g. a football manager or coach"@en ;
-                rdfs:isDefinedBy sport: ;
-                rdfs:label "Associate"@en .
-
-
-###  https://sportschema.org/ontologies/main/AssociateParticipation
-sport:AssociateParticipation rdf:type owl:Class ;
-                             rdfs:subClassOf sport:Participation ;
-                             rdfs:comment "The particpation of an associate who supports players and teams, e.g. coach, manager, trainer"@en ;
-                             rdfs:isDefinedBy sport: ;
-                             rdfs:label "Associate Participation"@en .
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/AthletePerfomance
+bv:AthletePerfomance rdf:type owl:Class ;
+                     rdfs:comment "Some kind of performance of an athlete in a match."@en ;
+                     rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                     rdfs:label "Athlete Performance"@en .
 
 
 ###  https://sportschema.org/ontologies/main/Athlete
 sport:Athlete rdf:type owl:Class ;
-              rdfs:subClassOf sport:Individual ;
-              rdfs:comment "A competitor in an individual event or a member of a team"@en ;
+              rdfs:comment "A member of a team."@en ;
               rdfs:isDefinedBy sport: ;
               rdfs:label "Athlete"@en .
 
 
 ###  https://sportschema.org/ontologies/main/Competition
 sport:Competition rdf:type owl:Class ;
-                  rdfs:subClassOf sport:ParticipatableThing ;
-                  rdfs:comment "A grouping of events usually based on proximity by time."@en ;
+                  rdfs:comment "A grouping of matches usually based on proximity by time."@en ;
                   rdfs:isDefinedBy sport: ;
                   rdfs:label "Competition"@en .
 
@@ -1364,25 +528,9 @@ sport:Competition rdf:type owl:Class ;
 ###  https://sportschema.org/ontologies/main/CompetitionPhase
 sport:CompetitionPhase rdf:type owl:Class ;
                        rdfs:subClassOf sport:Competition ;
-                       rdfs:comment "A sub-group of events within a Competition such as the semi-finals."@en ;
+                       rdfs:comment "A sub-group of matches within a Competition such as the semi-finals."@en ;
                        rdfs:isDefinedBy sport: ;
                        rdfs:label "Competition Phase"@en .
-
-
-###  https://sportschema.org/ontologies/main/CompetitorParticipation
-sport:CompetitorParticipation rdf:type owl:Class ;
-                              rdfs:subClassOf sport:Participation ;
-                              rdfs:comment "The participation of an actor that can win or lose an event."@en ;
-                              rdfs:isDefinedBy sport: ;
-                              rdfs:label "Competitor Participation"@en .
-
-
-###  https://sportschema.org/ontologies/main/Event
-sport:Event rdf:type owl:Class ;
-            rdfs:subClassOf sport:ParticipatableThing ;
-            rdfs:comment "A contest of competitive actions that generates statistical results."@en ;
-            rdfs:isDefinedBy sport: ;
-            rdfs:label "Event"@en .
 
 
 ###  https://sportschema.org/ontologies/main/GoverningBody
@@ -1392,93 +540,30 @@ sport:GoverningBody rdf:type owl:Class ;
                     rdfs:label "Governing Body"@en .
 
 
-###  https://sportschema.org/ontologies/main/Individual
-sport:Individual rdf:type owl:Class ;
-                 rdfs:subClassOf sport:Agent ;
-                 rdfs:comment "An individual taking part in an event on their own or as part of a team. Could be a person or an animal such as a dog or horse."@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "Individual"@en .
-
-
-###  https://sportschema.org/ontologies/main/IndividualMembership
-sport:IndividualMembership rdf:type owl:Class ;
-                           rdfs:subClassOf sport:Membership ;
-                           rdfs:comment "A player's membership in a team"@en ;
-                           rdfs:isDefinedBy sport: ;
-                           rdfs:label "Individual Membership"@en .
-
-
-###  https://sportschema.org/ontologies/main/IndividualParticipation
-sport:IndividualParticipation rdf:type owl:Class ;
-                              rdfs:subClassOf sport:CompetitorParticipation ;
-                              rdfs:comment "The participation of an individual in an event"@en ;
-                              rdfs:isDefinedBy sport: ;
-                              rdfs:label "Individual Participation"@en .
-
-
-###  https://sportschema.org/ontologies/main/Membership
-sport:Membership rdf:type owl:Class ;
-                 rdfs:comment "The membership of an entity in another entity for a given period of time"@en ;
-                 rdfs:isDefinedBy sport: ;
-                 rdfs:label "Membership"@en .
-
-
-###  https://sportschema.org/ontologies/main/Official
-sport:Official rdf:type owl:Class ;
-               rdfs:subClassOf sport:Individual ;
-               rdfs:comment "A person who ensures that the sports event is played according to its rules. Also referred to as umpire or referee."@en ;
-               rdfs:isDefinedBy sport: ;
-               rdfs:label "Official"@en .
-
-
-###  https://sportschema.org/ontologies/main/OfficialParticipation
-sport:OfficialParticipation rdf:type owl:Class ;
-                            rdfs:subClassOf sport:Participation ;
-                            rdfs:comment "The participation of an offcial in an event"@en ;
-                            rdfs:isDefinedBy sport: ;
-                            rdfs:label "Official Participation"@en .
-
-
-###  https://sportschema.org/ontologies/main/ParticipatableThing
-sport:ParticipatableThing rdf:type owl:Class ;
-                          rdfs:comment "An abstract superclass for anything that can be participated in, such as an Event, Competition or Action."@en ;
-                          rdfs:isDefinedBy sport: ;
-                          rdfs:label "Participatable Thing"@en .
-
-
-###  https://sportschema.org/ontologies/main/Participation
-sport:Participation rdf:type owl:Class ;
-                    rdfs:comment "The participation of an actor in an event."@en ;
-                    rdfs:isDefinedBy sport: ;
-                    rdfs:label "Participation"@en .
-
-
-###  https://sportschema.org/ontologies/main/ParticipationSplit
-sport:ParticipationSplit rdf:type owl:Class ;
-                         rdfs:comment "Representation of part of a participation of an actor in an event or season, such as one half of a football match or all home games."@en ;
-                         rdfs:isDefinedBy sport: ;
-                         rdfs:label "Participation Split"@en .
+###  https://sportschema.org/ontologies/main/Match
+sport:Match rdf:type owl:Class ;
+            rdfs:comment "A contest of competitive actions that generates statistical results."@en ;
+            rdfs:isDefinedBy sport: ;
+            rdfs:label "Match"@en .
 
 
 ###  https://sportschema.org/ontologies/main/Site
 sport:Site rdf:type owl:Class ;
-           rdfs:comment "The location where an activity takes place"@en ;
+           rdfs:comment "The location where an activity takes place."@en ;
            rdfs:isDefinedBy sport: ;
            rdfs:label "Site"@en .
 
 
 ###  https://sportschema.org/ontologies/main/Team
 sport:Team rdf:type owl:Class ;
-           rdfs:subClassOf sport:Agent ;
-           rdfs:comment "A group of individuals competing as one entity"@en ;
+           rdfs:comment "A group of athletes competing as one entity."@en ;
            rdfs:isDefinedBy sport: ;
            rdfs:label "Team"@en .
 
 
 ###  https://sportschema.org/ontologies/main/TeamParticipation
 sport:TeamParticipation rdf:type owl:Class ;
-                        rdfs:subClassOf sport:CompetitorParticipation ;
-                        rdfs:comment "The participation of a team in an event"@en ;
+                        rdfs:comment "The participation of a team in a match."@en ;
                         rdfs:isDefinedBy sport: ;
                         rdfs:label "Team Participation"@en .
 
@@ -1487,8 +572,19 @@ sport:TeamParticipation rdf:type owl:Class ;
 #    Annotations
 #################################################################
 
-spstat:resultEffectTarget rdfs:comment "The Competition/Event that the resultEffect gains access to, e.g. for qualification for a final the target would be the Event of the final, for relegation in soccer the target would be the new league division."@en ;
-                          rdfs:label "resultEffectTarget"@en .
+sport:competitionPhaseType rdfs:comment "Type of the competition phase - regular week, final etc."@en ;
+                           rdfs:isDefinedBy sport: ;
+                           rdfs:label "competition phase type"@en .
+
+
+sport:competitionType rdfs:comment "The type of a Competition, e.g. spct:recurring-competition or spct:competition."@en ;
+                      rdfs:isDefinedBy sport: ;
+                      rdfs:label "competition type"@en .
+
+
+sport:matchOutcome rdfs:comment "The outcome of a match (win, loss etc)."@en ;
+                   rdfs:isDefinedBy sport: ;
+                   rdfs:label "match outcome"@en .
 
 
 ###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
