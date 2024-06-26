@@ -8,7 +8,6 @@
 @prefix sport: <https://sportschema.org/ontologies/main/> .
 @prefix schema: <https://schema.org/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
-@prefix schema1: <http://schema.org/> .
 @base <https://github.com/andreazammarchi3/BeachVolleyballOntology/> .
 
 <https://github.com/andreazammarchi3/BeachVolleyballOntology/> rdf:type owl:Ontology ;
@@ -52,9 +51,10 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/athletePerformanceIn
 bv:athletePerformanceIn rdf:type owl:ObjectProperty ;
-                        rdfs:domain bv:AthletePerfomance ;
-                        rdfs:range bv:Match ;
-                        rdfs:comment "Link an athlete performance and a macth."@en ;
+                        owl:inverseOf bv:performanceIn ;
+                        rdfs:domain bv:Match ;
+                        rdfs:range bv:AthletePerfomance ;
+                        rdfs:comment "Link an athlete performance and a match."@en ;
                         rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
                         rdfs:label "athlete performance in"@en .
 
@@ -62,19 +62,11 @@ bv:athletePerformanceIn rdf:type owl:ObjectProperty ;
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/athletePerformanceOf
 bv:athletePerformanceOf rdf:type owl:ObjectProperty ;
                         owl:inverseOf bv:performanceOf ;
+                        rdfs:domain bv:Athlete ;
+                        rdfs:range bv:AthletePerfomance ;
                         rdfs:comment "Link between a performance and an athlete."@en ;
                         rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
                         rdfs:label "athlete performance"@en .
-
-
-###  https://github.com/andreazammarchi3/BeachVolleyballOntology/performance
-bv:performance rdf:type owl:ObjectProperty ;
-               owl:inverseOf bv:performanceIn ;
-               rdfs:domain bv:Match ;
-               rdfs:range bv:AthletePerfomance ;
-               rdfs:comment "Link between a match and a performance."@en ;
-               rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
-               rdfs:label "performance"@en .
 
 
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/performanceIn
@@ -202,12 +194,6 @@ sport:matchInCompetitionPhase rdf:type owl:ObjectProperty ;
                               rdfs:comment "The CompetitionPhase (such as a round or a finals phase) of which an Match is a part."@en ;
                               rdfs:isDefinedBy sport: ;
                               rdfs:label "match in competition phase"@en .
-
-
-###  https://sportschema.org/ontologies/main/matchOutcome
-sport:matchOutcome rdf:type owl:ObjectProperty ;
-                   rdfs:domain bv:Match ;
-                   rdfs:range <http://www.w3.org/2004/02/skos/core#Concept> .
 
 
 ###  https://sportschema.org/ontologies/main/member
@@ -512,10 +498,6 @@ sport:endDateTime rdf:type owl:DatatypeProperty ;
                   rdfs:label "end datetime"@en .
 
 
-###  https://sportschema.org/ontologies/main/matchOutcome
-sport:matchOutcome rdf:type owl:DatatypeProperty .
-
-
 ###  https://sportschema.org/ontologies/main/score
 sport:score rdf:type owl:DatatypeProperty ;
             rdfs:range xsd:string ;
@@ -611,8 +593,8 @@ bv:AlexeyKrasilnikov rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/AlexeyKrasilnikovPerformanceWorldTour2024CancunPhase1Match7
 bv:AlexeyKrasilnikovPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:NamedIndividual ,
                                                                         bv:AthletePerfomance ;
-                                                               bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match7 ;
-                                                               bv:athletePerformanceOf bv:AlexeyKrasilnikov ;
+                                                               bv:performanceIn bv:WorldTour2024CancunPhase1Match7 ;
+                                                               bv:performanceOf bv:AlexeyKrasilnikov ;
                                                                bv:attackErrors 0 ;
                                                                bv:attacks 8 ;
                                                                bv:blockErrors 1 ;
@@ -639,8 +621,8 @@ bv:AlexeyKrasilnikovPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:Name
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/AlexeyKrasilnikovPerformanceWorldTour2024CancunPhase2Match2
 bv:AlexeyKrasilnikovPerformanceWorldTour2024CancunPhase2Match2 rdf:type owl:NamedIndividual ,
                                                                         bv:AthletePerfomance ;
-                                                               bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match2 ;
-                                                               bv:athletePerformanceOf bv:AlexeyKrasilnikov ;
+                                                               bv:performanceIn bv:WorldTour2024CancunPhase2Match2 ;
+                                                               bv:performanceOf bv:AlexeyKrasilnikov ;
                                                                bv:attackErrors 0 ;
                                                                bv:attacks 8 ;
                                                                bv:blockErrors 1 ;
@@ -713,8 +695,8 @@ bv:JeanPierre rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JeanPierrePerformanceWorldTour2024CancunPhase1Match2
 bv:JeanPierrePerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match2 ;
-                                                        bv:athletePerformanceOf bv:JeanPierre ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase1Match2 ;
+                                                        bv:performanceOf bv:JeanPierre ;
                                                         bv:attackErrors 2 ;
                                                         bv:attacks 14 ;
                                                         bv:blockErrors 1 ;
@@ -741,8 +723,8 @@ bv:JeanPierrePerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JeanPierrePerformanceWorldTour2024CancunPhase1Match5
 bv:JeanPierrePerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match5 ;
-                                                        bv:athletePerformanceOf bv:JeanPierre ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase1Match5 ;
+                                                        bv:performanceOf bv:JeanPierre ;
                                                         bv:attackErrors 1 ;
                                                         bv:attacks 12 ;
                                                         bv:blockErrors 0 ;
@@ -769,8 +751,8 @@ bv:JeanPierrePerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JeanPierrePerformanceWorldTour2024CancunPhase2Match4
 bv:JeanPierrePerformanceWorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match4 ;
-                                                        bv:athletePerformanceOf bv:JeanPierre ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase2Match4 ;
+                                                        bv:performanceOf bv:JeanPierre ;
                                                         bv:attackErrors 0 ;
                                                         bv:attacks 8 ;
                                                         bv:blockErrors 1 ;
@@ -803,8 +785,8 @@ bv:JoaoPedroSilva rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JoaoPedroSilvaPerformanceWorldTour2024CancunPhase1Match3
 bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:NamedIndividual ,
                                                                      bv:AthletePerfomance ;
-                                                            bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match3 ;
-                                                            bv:athletePerformanceOf bv:JoaoPedroSilva ;
+                                                            bv:performanceIn bv:WorldTour2024CancunPhase1Match3 ;
+                                                            bv:performanceOf bv:JoaoPedroSilva ;
                                                             bv:attackErrors 2 ;
                                                             bv:attacks 10 ;
                                                             bv:blockErrors 1 ;
@@ -831,8 +813,8 @@ bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:NamedIn
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JoaoPedroSilvaPerformanceWorldTour2024CancunPhase1Match7
 bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:NamedIndividual ,
                                                                      bv:AthletePerfomance ;
-                                                            bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match7 ;
-                                                            bv:athletePerformanceOf bv:JoaoPedroSilva ;
+                                                            bv:performanceIn bv:WorldTour2024CancunPhase1Match7 ;
+                                                            bv:performanceOf bv:JoaoPedroSilva ;
                                                             bv:attackErrors 2 ;
                                                             bv:attacks 14 ;
                                                             bv:blockErrors 1 ;
@@ -859,8 +841,8 @@ bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:NamedIn
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JoaoPedroSilvaPerformanceWorldTour2024CancunPhase2Match2
 bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase2Match2 rdf:type owl:NamedIndividual ,
                                                                      bv:AthletePerfomance ;
-                                                            bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match2 ;
-                                                            bv:athletePerformanceOf bv:JoaoPedroSilva ;
+                                                            bv:performanceIn bv:WorldTour2024CancunPhase2Match2 ;
+                                                            bv:performanceOf bv:JoaoPedroSilva ;
                                                             bv:attackErrors 2 ;
                                                             bv:attacks 14 ;
                                                             bv:blockErrors 1 ;
@@ -887,8 +869,8 @@ bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase2Match2 rdf:type owl:NamedIn
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JoaoPedroSilvaPerformanceWorldTour2024CancunPhase3Match2
 bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:NamedIndividual ,
                                                                      bv:AthletePerfomance ;
-                                                            bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match2 ;
-                                                            bv:athletePerformanceOf bv:JoaoPedroSilva ;
+                                                            bv:performanceIn bv:WorldTour2024CancunPhase3Match2 ;
+                                                            bv:performanceOf bv:JoaoPedroSilva ;
                                                             bv:attackErrors 2 ;
                                                             bv:attacks 14 ;
                                                             bv:blockErrors 1 ;
@@ -915,8 +897,8 @@ bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:NamedIn
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JoaoPedroSilvaPerformanceWorldTour2024CancunPhase4Match2
 bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase4Match2 rdf:type owl:NamedIndividual ,
                                                                      bv:AthletePerfomance ;
-                                                            bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match2 ;
-                                                            bv:athletePerformanceOf bv:JoaoPedroSilva ;
+                                                            bv:performanceIn bv:WorldTour2024CancunPhase4Match2 ;
+                                                            bv:performanceOf bv:JoaoPedroSilva ;
                                                             bv:attackErrors 2 ;
                                                             bv:attacks 14 ;
                                                             bv:blockErrors 1 ;
@@ -949,8 +931,8 @@ bv:JohnSmith rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JohnSmithPerformanceWorldTour2024CancunPhase1Match3
 bv:JohnSmithPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match3 ;
-                                                       bv:athletePerformanceOf bv:JohnSmith ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase1Match3 ;
+                                                       bv:performanceOf bv:JohnSmith ;
                                                        bv:attackErrors 0 ;
                                                        bv:attacks 8 ;
                                                        bv:blockErrors 1 ;
@@ -977,8 +959,8 @@ bv:JohnSmithPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JohnSmithPerformanceWorldTour2024CancunPhase1Match8
 bv:JohnSmithPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match8 ;
-                                                       bv:athletePerformanceOf bv:JohnSmith ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase1Match8 ;
+                                                       bv:performanceOf bv:JohnSmith ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 10 ;
                                                        bv:blockErrors 1 ;
@@ -1005,8 +987,8 @@ bv:JohnSmithPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JohnSmithPerformanceWorldTour2024CancunPhase2Match3
 bv:JohnSmithPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match3 ;
-                                                       bv:athletePerformanceOf bv:JohnSmith ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase2Match3 ;
+                                                       bv:performanceOf bv:JohnSmith ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 10 ;
                                                        bv:blockErrors 1 ;
@@ -1033,8 +1015,8 @@ bv:JohnSmithPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JohnSmithPerformanceWorldTour2024CancunPhase3Match2
 bv:JohnSmithPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match2 ;
-                                                       bv:athletePerformanceOf bv:JohnSmith ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase3Match2 ;
+                                                       bv:performanceOf bv:JohnSmith ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 10 ;
                                                        bv:blockErrors 1 ;
@@ -1061,8 +1043,8 @@ bv:JohnSmithPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JohnSmithPerformanceWorldTour2024CancunPhase4Match1
 bv:JohnSmithPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match1 ;
-                                                       bv:athletePerformanceOf bv:JohnSmith ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase4Match1 ;
+                                                       bv:performanceOf bv:JohnSmith ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 10 ;
                                                        bv:blockErrors 1 ;
@@ -1095,8 +1077,8 @@ bv:JuanPerez rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JuanPerezPerformanceWorldTour2024CancunPhase1Match1
 bv:JuanPerezPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match1 ;
-                                                       bv:athletePerformanceOf bv:JuanPerez ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase1Match1 ;
+                                                       bv:performanceOf bv:JuanPerez ;
                                                        bv:attackErrors 0 ;
                                                        bv:attacks 8 ;
                                                        bv:blockErrors 1 ;
@@ -1123,8 +1105,8 @@ bv:JuanPerezPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JuanPerezPerformanceWorldTour2024CancunPhase1Match6
 bv:JuanPerezPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match6 ;
-                                                       bv:athletePerformanceOf bv:JuanPerez ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase1Match6 ;
+                                                       bv:performanceOf bv:JuanPerez ;
                                                        bv:attackErrors 0 ;
                                                        bv:attacks 8 ;
                                                        bv:blockErrors 1 ;
@@ -1151,8 +1133,8 @@ bv:JuanPerezPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JuanPerezPerformanceWorldTour2024CancunPhase2Match3
 bv:JuanPerezPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match3 ;
-                                                       bv:athletePerformanceOf bv:JuanPerez ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase2Match3 ;
+                                                       bv:performanceOf bv:JuanPerez ;
                                                        bv:attackErrors 0 ;
                                                        bv:attacks 8 ;
                                                        bv:blockErrors 1 ;
@@ -1185,8 +1167,8 @@ bv:LarsFluggen rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LarsFluggenPerformanceWorldTour2024CancunPhase1Match2
 bv:LarsFluggenPerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match2 ;
-                                                         bv:athletePerformanceOf bv:LarsFluggen ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match2 ;
+                                                         bv:performanceOf bv:LarsFluggen ;
                                                          bv:attackErrors 0 ;
                                                          bv:attacks 8 ;
                                                          bv:blockErrors 1 ;
@@ -1213,8 +1195,8 @@ bv:LarsFluggenPerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LarsFluggenPerformanceWorldTour2024CancunPhase1Match6
 bv:LarsFluggenPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match6 ;
-                                                         bv:athletePerformanceOf bv:LarsFluggen ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match6 ;
+                                                         bv:performanceOf bv:LarsFluggen ;
                                                          bv:attackErrors 2 ;
                                                          bv:attacks 10 ;
                                                          bv:blockErrors 1 ;
@@ -1241,8 +1223,8 @@ bv:LarsFluggenPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LarsFluggenPerformanceWorldTour2024CancunPhase2Match1
 bv:LarsFluggenPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match1 ;
-                                                         bv:athletePerformanceOf bv:LarsFluggen ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase2Match1 ;
+                                                         bv:performanceOf bv:LarsFluggen ;
                                                          bv:attackErrors 2 ;
                                                          bv:attacks 10 ;
                                                          bv:blockErrors 1 ;
@@ -1273,8 +1255,8 @@ bv:LouisDupont rdf:type owl:NamedIndividual .
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LouisDupontPerformanceWorldTour2024CancunPhase2Match4
 bv:LouisDupontPerformanceWorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match4 ;
-                                                         bv:athletePerformanceOf bv:LouisDupont ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase2Match4 ;
+                                                         bv:performanceOf bv:LouisDupont ;
                                                          bv:attackErrors 2 ;
                                                          bv:attacks 10 ;
                                                          bv:blockErrors 1 ;
@@ -1307,8 +1289,8 @@ bv:LouisLafont rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LouisLafontPerformanceWorldTour2024CancunPhase1Match2
 bv:LouisLafontPerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match2 ;
-                                                         bv:athletePerformanceOf bv:LouisLafont ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match2 ;
+                                                         bv:performanceOf bv:LouisLafont ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 12 ;
                                                          bv:blockErrors 0 ;
@@ -1335,8 +1317,8 @@ bv:LouisLafontPerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LouisLafontPerformanceWorldTour2024CancunPhase1Match5
 bv:LouisLafontPerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match5 ;
-                                                         bv:athletePerformanceOf bv:LouisLafont ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match5 ;
+                                                         bv:performanceOf bv:LouisLafont ;
                                                          bv:attackErrors 2 ;
                                                          bv:attacks 10 ;
                                                          bv:blockErrors 1 ;
@@ -1369,8 +1351,8 @@ bv:LuigiBianchi rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LuigiBianchiPerformanceWorldTour2024CancunPhase1Match1
 bv:LuigiBianchiPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match1 ;
-                                                          bv:athletePerformanceOf bv:LuigiBianchi ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase1Match1 ;
+                                                          bv:performanceOf bv:LuigiBianchi ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 12 ;
                                                           bv:blockErrors 0 ;
@@ -1397,8 +1379,8 @@ bv:LuigiBianchiPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LuigiBianchiPerformanceWorldTour2024CancunPhase1Match5
 bv:LuigiBianchiPerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match5 ;
-                                                          bv:athletePerformanceOf bv:LuigiBianchi ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase1Match5 ;
+                                                          bv:performanceOf bv:LuigiBianchi ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 6 ;
                                                           bv:blockErrors 0 ;
@@ -1425,8 +1407,8 @@ bv:LuigiBianchiPerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LuigiBianchiPerformanceWorldTour2024CancunPhase2Match1
 bv:LuigiBianchiPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match1 ;
-                                                          bv:athletePerformanceOf bv:LuigiBianchi ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase2Match1 ;
+                                                          bv:performanceOf bv:LuigiBianchi ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 6 ;
                                                           bv:blockErrors 0 ;
@@ -1453,8 +1435,8 @@ bv:LuigiBianchiPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LuigiBianchiPerformanceWorldTour2024CancunPhase3Match1
 bv:LuigiBianchiPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match1 ;
-                                                          bv:athletePerformanceOf bv:LuigiBianchi ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase3Match1 ;
+                                                          bv:performanceOf bv:LuigiBianchi ;
                                                           bv:attackErrors 0 ;
                                                           bv:attacks 8 ;
                                                           bv:blockErrors 1 ;
@@ -1481,8 +1463,8 @@ bv:LuigiBianchiPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LuigiBianchiPerformanceWorldTour2024CancunPhase4Match1
 bv:LuigiBianchiPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match1 ;
-                                                          bv:athletePerformanceOf bv:LuigiBianchi ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase4Match1 ;
+                                                          bv:performanceOf bv:LuigiBianchi ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 12 ;
                                                           bv:blockErrors 0 ;
@@ -1515,8 +1497,8 @@ bv:MarcusBockermann rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarcusBockermannPerformanceWorldTour2024CancunPhase1Match2
 bv:MarcusBockermannPerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndividual ,
                                                                        bv:AthletePerfomance ;
-                                                              bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match2 ;
-                                                              bv:athletePerformanceOf bv:MarcusBockermann ;
+                                                              bv:performanceIn bv:WorldTour2024CancunPhase1Match2 ;
+                                                              bv:performanceOf bv:MarcusBockermann ;
                                                               bv:attackErrors 1 ;
                                                               bv:attacks 6 ;
                                                               bv:blockErrors 0 ;
@@ -1543,8 +1525,8 @@ bv:MarcusBockermannPerformanceWorldTour2024CancunPhase1Match2 rdf:type owl:Named
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarcusBockermannPerformanceWorldTour2024CancunPhase1Match6
 bv:MarcusBockermannPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndividual ,
                                                                        bv:AthletePerfomance ;
-                                                              bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match6 ;
-                                                              bv:athletePerformanceOf bv:MarcusBockermann ;
+                                                              bv:performanceIn bv:WorldTour2024CancunPhase1Match6 ;
+                                                              bv:performanceOf bv:MarcusBockermann ;
                                                               bv:attackErrors 1 ;
                                                               bv:attacks 12 ;
                                                               bv:blockErrors 0 ;
@@ -1571,8 +1553,8 @@ bv:MarcusBockermannPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:Named
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarcusBockermannPerformanceWorldTour2024CancunPhase2Match1
 bv:MarcusBockermannPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndividual ,
                                                                        bv:AthletePerfomance ;
-                                                              bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match1 ;
-                                                              bv:athletePerformanceOf bv:MarcusBockermann ;
+                                                              bv:performanceIn bv:WorldTour2024CancunPhase2Match1 ;
+                                                              bv:performanceOf bv:MarcusBockermann ;
                                                               bv:attackErrors 1 ;
                                                               bv:attacks 12 ;
                                                               bv:blockErrors 0 ;
@@ -1605,8 +1587,8 @@ bv:MarioRossi rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarioRossiPerformanceWorldTour2024CancunPhase1Match1
 bv:MarioRossiPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match1 ;
-                                                        bv:athletePerformanceOf bv:MarioRossi ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase1Match1 ;
+                                                        bv:performanceOf bv:MarioRossi ;
                                                         bv:attackErrors 2 ;
                                                         bv:attacks 10 ;
                                                         bv:blockErrors 1 ;
@@ -1633,8 +1615,8 @@ bv:MarioRossiPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarioRossiPerformanceWorldTour2024CancunPhase1Match5
 bv:MarioRossiPerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match5 ;
-                                                        bv:athletePerformanceOf bv:MarioRossi ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase1Match5 ;
+                                                        bv:performanceOf bv:MarioRossi ;
                                                         bv:attackErrors 0 ;
                                                         bv:attacks 8 ;
                                                         bv:blockErrors 1 ;
@@ -1661,8 +1643,8 @@ bv:MarioRossiPerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarioRossiPerformanceWorldTour2024CancunPhase2Match1
 bv:MarioRossiPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match1 ;
-                                                        bv:athletePerformanceOf bv:MarioRossi ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase2Match1 ;
+                                                        bv:performanceOf bv:MarioRossi ;
                                                         bv:attackErrors 0 ;
                                                         bv:attacks 8 ;
                                                         bv:blockErrors 1 ;
@@ -1689,8 +1671,8 @@ bv:MarioRossiPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarioRossiPerformanceWorldTour2024CancunPhase3Match1
 bv:MarioRossiPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match1 ;
-                                                        bv:athletePerformanceOf bv:MarioRossi ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase3Match1 ;
+                                                        bv:performanceOf bv:MarioRossi ;
                                                         bv:attackErrors 2 ;
                                                         bv:attacks 10 ;
                                                         bv:blockErrors 1 ;
@@ -1717,8 +1699,8 @@ bv:MarioRossiPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarioRossiPerformanceWorldTour2024CancunPhase4Match1
 bv:MarioRossiPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndividual ,
                                                                  bv:AthletePerfomance ;
-                                                        bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match1 ;
-                                                        bv:athletePerformanceOf bv:MarioRossi ;
+                                                        bv:performanceIn bv:WorldTour2024CancunPhase4Match1 ;
+                                                        bv:performanceOf bv:MarioRossi ;
                                                         bv:attackErrors 2 ;
                                                         bv:attacks 14 ;
                                                         bv:blockErrors 1 ;
@@ -1751,8 +1733,8 @@ bv:MikeJohnson rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MikeJohnsonPerformanceWorldTour2024CancunPhase1Match3
 bv:MikeJohnsonPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match3 ;
-                                                         bv:athletePerformanceOf bv:MikeJohnson ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match3 ;
+                                                         bv:performanceOf bv:MikeJohnson ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 6 ;
                                                          bv:blockErrors 0 ;
@@ -1779,8 +1761,8 @@ bv:MikeJohnsonPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MikeJohnsonPerformanceWorldTour2024CancunPhase1Match8
 bv:MikeJohnsonPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match8 ;
-                                                         bv:athletePerformanceOf bv:MikeJohnson ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match8 ;
+                                                         bv:performanceOf bv:MikeJohnson ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 12 ;
                                                          bv:blockErrors 0 ;
@@ -1807,8 +1789,8 @@ bv:MikeJohnsonPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MikeJohnsonPerformanceWorldTour2024CancunPhase2Match3
 bv:MikeJohnsonPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match3 ;
-                                                         bv:athletePerformanceOf bv:MikeJohnson ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase2Match3 ;
+                                                         bv:performanceOf bv:MikeJohnson ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 12 ;
                                                          bv:blockErrors 0 ;
@@ -1835,8 +1817,8 @@ bv:MikeJohnsonPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MikeJohnsonPerformanceWorldTour2024CancunPhase3Match2
 bv:MikeJohnsonPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match2 ;
-                                                         bv:athletePerformanceOf bv:MikeJohnson ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase3Match2 ;
+                                                         bv:performanceOf bv:MikeJohnson ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 12 ;
                                                          bv:blockErrors 0 ;
@@ -1863,8 +1845,8 @@ bv:MikeJohnsonPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MikeJohnsonPerformanceWorldTour2024CancunPhase4Match1
 bv:MikeJohnsonPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match1 ;
-                                                         bv:athletePerformanceOf bv:MikeJohnson ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase4Match1 ;
+                                                         bv:performanceOf bv:MikeJohnson ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 12 ;
                                                          bv:blockErrors 0 ;
@@ -1897,8 +1879,8 @@ bv:OlegStoyanovskiy rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/OlegStoyanovskiyPerformanceWorldTour2024CancunPhase1Match4
 bv:OlegStoyanovskiyPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:NamedIndividual ,
                                                                        bv:AthletePerfomance ;
-                                                              bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match4 ;
-                                                              bv:athletePerformanceOf bv:OlegStoyanovskiy ;
+                                                              bv:performanceIn bv:WorldTour2024CancunPhase1Match4 ;
+                                                              bv:performanceOf bv:OlegStoyanovskiy ;
                                                               bv:attackErrors 0 ;
                                                               bv:attacks 8 ;
                                                               bv:blockErrors 1 ;
@@ -1931,8 +1913,8 @@ bv:PedroGarcia rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroGarciaPerformanceWorldTour2024CancunPhase1Match1
 bv:PedroGarciaPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match1 ;
-                                                         bv:athletePerformanceOf bv:PedroGarcia ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match1 ;
+                                                         bv:performanceOf bv:PedroGarcia ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 6 ;
                                                          bv:blockErrors 0 ;
@@ -1959,8 +1941,8 @@ bv:PedroGarciaPerformanceWorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroGarciaPerformanceWorldTour2024CancunPhase1Match6
 bv:PedroGarciaPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match6 ;
-                                                         bv:athletePerformanceOf bv:PedroGarcia ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase1Match6 ;
+                                                         bv:performanceOf bv:PedroGarcia ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 6 ;
                                                          bv:blockErrors 0 ;
@@ -1987,8 +1969,8 @@ bv:PedroGarciaPerformanceWorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroGarciaPerformanceWorldTour2024CancunPhase2Match3
 bv:PedroGarciaPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndividual ,
                                                                   bv:AthletePerfomance ;
-                                                         bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match3 ;
-                                                         bv:athletePerformanceOf bv:PedroGarcia ;
+                                                         bv:performanceIn bv:WorldTour2024CancunPhase2Match3 ;
+                                                         bv:performanceOf bv:PedroGarcia ;
                                                          bv:attackErrors 1 ;
                                                          bv:attacks 6 ;
                                                          bv:blockErrors 0 ;
@@ -2021,8 +2003,8 @@ bv:PedroHenriqueGomes rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroHenriqueGomesPerformanceWorldTour2024CancunPhase1Match3
 bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:NamedIndividual ,
                                                                          bv:AthletePerfomance ;
-                                                                bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match3 ;
-                                                                bv:athletePerformanceOf bv:PedroHenriqueGomes ;
+                                                                bv:performanceIn bv:WorldTour2024CancunPhase1Match3 ;
+                                                                bv:performanceOf bv:PedroHenriqueGomes ;
                                                                 bv:attackErrors 1 ;
                                                                 bv:attacks 12 ;
                                                                 bv:blockErrors 0 ;
@@ -2049,8 +2031,8 @@ bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase1Match3 rdf:type owl:Nam
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroHenriqueGomesPerformanceWorldTour2024CancunPhase1Match7
 bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:NamedIndividual ,
                                                                          bv:AthletePerfomance ;
-                                                                bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match7 ;
-                                                                bv:athletePerformanceOf bv:PedroHenriqueGomes ;
+                                                                bv:performanceIn bv:WorldTour2024CancunPhase1Match7 ;
+                                                                bv:performanceOf bv:PedroHenriqueGomes ;
                                                                 bv:attackErrors 1 ;
                                                                 bv:attacks 12 ;
                                                                 bv:blockErrors 0 ;
@@ -2077,8 +2059,8 @@ bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:Nam
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroHenriqueGomesPerformanceWorldTour2024CancunPhase2Match2
 bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase2Match2 rdf:type owl:NamedIndividual ,
                                                                          bv:AthletePerfomance ;
-                                                                bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match2 ;
-                                                                bv:athletePerformanceOf bv:PedroHenriqueGomes ;
+                                                                bv:performanceIn bv:WorldTour2024CancunPhase2Match2 ;
+                                                                bv:performanceOf bv:PedroHenriqueGomes ;
                                                                 bv:attackErrors 1 ;
                                                                 bv:attacks 12 ;
                                                                 bv:blockErrors 0 ;
@@ -2105,8 +2087,8 @@ bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase2Match2 rdf:type owl:Nam
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroHenriqueGomesPerformanceWorldTour2024CancunPhase3Match2
 bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:NamedIndividual ,
                                                                          bv:AthletePerfomance ;
-                                                                bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match2 ;
-                                                                bv:athletePerformanceOf bv:PedroHenriqueGomes ;
+                                                                bv:performanceIn bv:WorldTour2024CancunPhase3Match2 ;
+                                                                bv:performanceOf bv:PedroHenriqueGomes ;
                                                                 bv:attackErrors 1 ;
                                                                 bv:attacks 12 ;
                                                                 bv:blockErrors 0 ;
@@ -2133,8 +2115,8 @@ bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase3Match2 rdf:type owl:Nam
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroHenriqueGomesPerformanceWorldTour2024CancunPhase4Match2
 bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase4Match2 rdf:type owl:NamedIndividual ,
                                                                          bv:AthletePerfomance ;
-                                                                bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match2 ;
-                                                                bv:athletePerformanceOf bv:PedroHenriqueGomes ;
+                                                                bv:performanceIn bv:WorldTour2024CancunPhase4Match2 ;
+                                                                bv:performanceOf bv:PedroHenriqueGomes ;
                                                                 bv:attackErrors 1 ;
                                                                 bv:attacks 12 ;
                                                                 bv:blockErrors 0 ;
@@ -2167,8 +2149,8 @@ bv:SamPedlow rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamPedlowPerformanceWorldTour2024CancunPhase1Match4
 bv:SamPedlowPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match4 ;
-                                                       bv:athletePerformanceOf bv:SamPedlow ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase1Match4 ;
+                                                       bv:performanceOf bv:SamPedlow ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 10 ;
                                                        bv:blockErrors 1 ;
@@ -2195,8 +2177,8 @@ bv:SamPedlowPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamPedlowPerformanceWorldTour2024CancunPhase1Match8
 bv:SamPedlowPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match8 ;
-                                                       bv:athletePerformanceOf bv:SamPedlow ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase1Match8 ;
+                                                       bv:performanceOf bv:SamPedlow ;
                                                        bv:attackErrors 0 ;
                                                        bv:attacks 8 ;
                                                        bv:blockErrors 1 ;
@@ -2223,8 +2205,8 @@ bv:SamPedlowPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamPedlowPerformanceWorldTour2024CancunPhase2Match4
 bv:SamPedlowPerformanceWorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match4 ;
-                                                       bv:athletePerformanceOf bv:SamPedlow ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase2Match4 ;
+                                                       bv:performanceOf bv:SamPedlow ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 14 ;
                                                        bv:blockErrors 1 ;
@@ -2251,8 +2233,8 @@ bv:SamPedlowPerformanceWorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamPedlowPerformanceWorldTour2024CancunPhase3Match1
 bv:SamPedlowPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match1 ;
-                                                       bv:athletePerformanceOf bv:SamPedlow ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase3Match1 ;
+                                                       bv:performanceOf bv:SamPedlow ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 14 ;
                                                        bv:blockErrors 1 ;
@@ -2279,8 +2261,8 @@ bv:SamPedlowPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamPedlowPerformanceWorldTour2024CancunPhase4Match2
 bv:SamPedlowPerformanceWorldTour2024CancunPhase4Match2 rdf:type owl:NamedIndividual ,
                                                                 bv:AthletePerfomance ;
-                                                       bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match2 ;
-                                                       bv:athletePerformanceOf bv:SamPedlow ;
+                                                       bv:performanceIn bv:WorldTour2024CancunPhase4Match2 ;
+                                                       bv:performanceOf bv:SamPedlow ;
                                                        bv:attackErrors 2 ;
                                                        bv:attacks 10 ;
                                                        bv:blockErrors 1 ;
@@ -2313,8 +2295,8 @@ bv:SamSchachter rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamSchachterPerformanceWorldTour2024CancunPhase1Match4
 bv:SamSchachterPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match4 ;
-                                                          bv:athletePerformanceOf bv:SamSchachter ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase1Match4 ;
+                                                          bv:performanceOf bv:SamSchachter ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 12 ;
                                                           bv:blockErrors 0 ;
@@ -2341,8 +2323,8 @@ bv:SamSchachterPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamSchachterPerformanceWorldTour2024CancunPhase1Match8
 bv:SamSchachterPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match8 ;
-                                                          bv:athletePerformanceOf bv:SamSchachter ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase1Match8 ;
+                                                          bv:performanceOf bv:SamSchachter ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 6 ;
                                                           bv:blockErrors 0 ;
@@ -2369,8 +2351,8 @@ bv:SamSchachterPerformanceWorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamSchachterPerformanceWorldTour2024CancunPhase2Match4
 bv:SamSchachterPerformanceWorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match4 ;
-                                                          bv:athletePerformanceOf bv:SamSchachter ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase2Match4 ;
+                                                          bv:performanceOf bv:SamSchachter ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 12 ;
                                                           bv:blockErrors 0 ;
@@ -2397,8 +2379,8 @@ bv:SamSchachterPerformanceWorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamSchachterPerformanceWorldTour2024CancunPhase3Match1
 bv:SamSchachterPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase3Match1 ;
-                                                          bv:athletePerformanceOf bv:SamSchachter ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase3Match1 ;
+                                                          bv:performanceOf bv:SamSchachter ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 12 ;
                                                           bv:blockErrors 0 ;
@@ -2425,8 +2407,8 @@ bv:SamSchachterPerformanceWorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamSchachterPerformanceWorldTour2024CancunPhase4Match2
 bv:SamSchachterPerformanceWorldTour2024CancunPhase4Match2 rdf:type owl:NamedIndividual ,
                                                                    bv:AthletePerfomance ;
-                                                          bv:athletePerformanceIn bv:WorldTour2024CancunPhase4Match2 ;
-                                                          bv:athletePerformanceOf bv:SamSchachter ;
+                                                          bv:performanceIn bv:WorldTour2024CancunPhase4Match2 ;
+                                                          bv:performanceOf bv:SamSchachter ;
                                                           bv:attackErrors 1 ;
                                                           bv:attacks 12 ;
                                                           bv:blockErrors 0 ;
@@ -2521,8 +2503,8 @@ bv:ViacheslavKrasilnikov rdf:type owl:NamedIndividual .
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase1Match4
 bv:ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:NamedIndividual ,
                                                                             bv:AthletePerfomance ;
-                                                                   bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match4 ;
-                                                                   bv:athletePerformanceOf bv:ViacheslavKrasilnikov ;
+                                                                   bv:performanceIn bv:WorldTour2024CancunPhase1Match4 ;
+                                                                   bv:performanceOf bv:ViacheslavKrasilnikov ;
                                                                    bv:attackErrors 1 ;
                                                                    bv:attacks 6 ;
                                                                    bv:blockErrors 0 ;
@@ -2549,8 +2531,8 @@ bv:ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase1Match7
 bv:ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:NamedIndividual ,
                                                                             bv:AthletePerfomance ;
-                                                                   bv:athletePerformanceIn bv:WorldTour2024CancunPhase1Match7 ;
-                                                                   bv:athletePerformanceOf bv:ViacheslavKrasilnikov ;
+                                                                   bv:performanceIn bv:WorldTour2024CancunPhase1Match7 ;
+                                                                   bv:performanceOf bv:ViacheslavKrasilnikov ;
                                                                    bv:attackErrors 1 ;
                                                                    bv:attacks 6 ;
                                                                    bv:blockErrors 0 ;
@@ -2577,8 +2559,8 @@ bv:ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase1Match7 rdf:type owl:
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase2Match2
 bv:ViacheslavKrasilnikovPerformanceWorldTour2024CancunPhase2Match2 rdf:type owl:NamedIndividual ,
                                                                             bv:AthletePerfomance ;
-                                                                   bv:athletePerformanceIn bv:WorldTour2024CancunPhase2Match2 ;
-                                                                   bv:athletePerformanceOf bv:ViacheslavKrasilnikov ;
+                                                                   bv:performanceIn bv:WorldTour2024CancunPhase2Match2 ;
+                                                                   bv:performanceOf bv:ViacheslavKrasilnikov ;
                                                                    bv:attackErrors 1 ;
                                                                    bv:attacks 6 ;
                                                                    bv:blockErrors 0 ;
@@ -2635,7 +2617,7 @@ bv:WorldTour2024CancunPhase1Match1 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamItaly ,
                                                        bv:TeamSpain ;
                                    sport:endDateTime "2024-03-14T10:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-10"@en ;
+                                   sport:score "21-10" ;
                                    sport:startDateTime "2024-03-14T09:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 1"@en .
 
@@ -2649,7 +2631,7 @@ bv:WorldTour2024CancunPhase1Match2 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamFrance ,
                                                        bv:TeamGermany ;
                                    sport:endDateTime "2024-03-14T11:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-15"@en ;
+                                   sport:score "21-15" ;
                                    sport:startDateTime "2024-03-14T10:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 2"@en .
 
@@ -2663,7 +2645,7 @@ bv:WorldTour2024CancunPhase1Match3 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamBrasil ,
                                                        bv:TeamUSA ;
                                    sport:endDateTime "2024-03-14T12:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-17"@en ;
+                                   sport:score "21-17" ;
                                    sport:startDateTime "2024-03-14T11:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 3"@en .
 
@@ -2677,7 +2659,7 @@ bv:WorldTour2024CancunPhase1Match4 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamCanada ,
                                                        bv:TeamRussia ;
                                    sport:endDateTime "2024-03-14T13:00:00Z"^^xsd:dateTime ;
-                                   sport:score "19-21"@en ;
+                                   sport:score "19-21" ;
                                    sport:startDateTime "2024-03-14T12:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 4"@en .
 
@@ -2691,7 +2673,7 @@ bv:WorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamFrance ,
                                                        bv:TeamItaly ;
                                    sport:endDateTime "2024-03-14T14:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-16"@en ;
+                                   sport:score "21-16" ;
                                    sport:startDateTime "2024-03-14T13:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 5"@en .
 
@@ -2705,7 +2687,7 @@ bv:WorldTour2024CancunPhase1Match6 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamGermany ,
                                                        bv:TeamSpain ;
                                    sport:endDateTime "2024-03-14T15:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-18"@en ;
+                                   sport:score "21-18" ;
                                    sport:startDateTime "2024-03-14T14:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 6"@en .
 
@@ -2719,7 +2701,7 @@ bv:WorldTour2024CancunPhase1Match7 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamBrasil ,
                                                        bv:TeamRussia ;
                                    sport:endDateTime "2024-03-14T16:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-19"@en ;
+                                   sport:score "21-19" ;
                                    sport:startDateTime "2024-03-14T15:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 7"@en .
 
@@ -2733,7 +2715,7 @@ bv:WorldTour2024CancunPhase1Match8 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamCanada ,
                                                        bv:TeamUSA ;
                                    sport:endDateTime "2024-03-14T17:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-11"@en ;
+                                   sport:score "21-11" ;
                                    sport:startDateTime "2024-03-14T16:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 1 Match 8"@en .
 
@@ -2756,7 +2738,7 @@ bv:WorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamGermany ,
                                                        bv:TeamItaly ;
                                    sport:endDateTime "2024-03-15T10:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-07"@en ;
+                                   sport:score "21-07" ;
                                    sport:startDateTime "2024-03-15T09:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 2 Match 1"@en .
 
@@ -2770,7 +2752,7 @@ bv:WorldTour2024CancunPhase2Match2 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamBrasil ,
                                                        bv:TeamRussia ;
                                    sport:endDateTime "2024-03-15T11:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-15"@en ;
+                                   sport:score "21-15" ;
                                    sport:startDateTime "2024-03-15T10:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 2 Match 2"@en .
 
@@ -2784,7 +2766,7 @@ bv:WorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamSpain ,
                                                        bv:TeamUSA ;
                                    sport:endDateTime "2024-03-15T12:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-17"@en ;
+                                   sport:score "21-17" ;
                                    sport:startDateTime "2024-03-15T11:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 2 Match 3"@en .
 
@@ -2798,7 +2780,7 @@ bv:WorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamCanada ,
                                                        bv:TeamFrance ;
                                    sport:endDateTime "2024-03-15T13:00:00Z"^^xsd:dateTime ;
-                                   sport:score "19-21"@en ;
+                                   sport:score "19-21" ;
                                    sport:startDateTime "2024-03-15T12:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 2 Match 4"@en .
 
@@ -2821,7 +2803,7 @@ bv:WorldTour2024CancunPhase3Match1 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamCanada ,
                                                        bv:TeamItaly ;
                                    sport:endDateTime "2024-03-16T10:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-18"@en ;
+                                   sport:score "21-18" ;
                                    sport:startDateTime "2024-03-16T09:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 3 Match 1"@en .
 
@@ -2835,7 +2817,7 @@ bv:WorldTour2024CancunPhase3Match2 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamBrasil ,
                                                        bv:TeamUSA ;
                                    sport:endDateTime "2024-03-16T11:00:00Z"^^xsd:dateTime ;
-                                   sport:score "22-24"@en ;
+                                   sport:score "22-24" ;
                                    sport:startDateTime "2024-03-16T10:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 3 Match 2"@en .
 
@@ -2858,7 +2840,7 @@ bv:WorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamItaly ,
                                                        bv:TeamUSA ;
                                    sport:endDateTime "2024-03-17T10:00:00Z"^^xsd:dateTime ;
-                                   sport:score "23-21"@en ;
+                                   sport:score "23-21" ;
                                    sport:startDateTime "2024-03-17T09:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 4 Match 1"@en .
 
@@ -2872,7 +2854,7 @@ bv:WorldTour2024CancunPhase4Match2 rdf:type owl:NamedIndividual ,
                                    sport:participation bv:TeamBrasil ,
                                                        bv:TeamCanada ;
                                    sport:endDateTime "2024-03-17T11:00:00Z"^^xsd:dateTime ;
-                                   sport:score "21-19"@en ;
+                                   sport:score "21-19" ;
                                    sport:startDateTime "2024-03-17T10:00:00Z"^^xsd:dateTime ;
                                    rdfs:label "World Tour 2024 Cancun Phase 4 Match 2"@en .
 
@@ -2889,11 +2871,6 @@ sport:competitionPhaseType rdfs:comment "Type of the competition phase - regular
 sport:competitionType rdfs:comment "The type of a Competition, e.g. spct:recurring-competition or spct:competition."@en ;
                       rdfs:isDefinedBy sport: ;
                       rdfs:label "competition type"@en .
-
-
-sport:matchOutcome rdfs:comment "The outcome of a match (win, loss etc)."@en ;
-                   rdfs:isDefinedBy sport: ;
-                   rdfs:label "match outcome"@en .
 
 
 ###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
