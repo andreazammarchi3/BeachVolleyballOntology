@@ -1,0 +1,14 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# What is the total number of serve errors made by all players in team X during the competition Y?
+
+SELECT (SUM(?serveErrors) AS ?totalServeErrors)
+WHERE {
+  ?performance :serveErrors ?serveErrors ;
+               :hasPlayer ?player ;
+               :partOfMatch ?match .
+  ?match :participation :TeamX ;
+         :partOfCompetition :CompetitionY .
+}

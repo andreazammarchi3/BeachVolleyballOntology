@@ -1,0 +1,16 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Which player scored the highest number of points in the competition Y?
+
+SELECT ?player (SUM(?points) AS ?totalPoints)
+WHERE {
+  ?performance :hasPlayer ?player ;
+               :points ?points ;
+               :partOfMatch ?match .
+  ?match :partOfCompetition :CompetitionY .
+}
+GROUP BY ?player
+ORDER BY DESC(?totalPoints)
+LIMIT 1

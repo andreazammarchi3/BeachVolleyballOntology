@@ -1,0 +1,11 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# How many matches did team X participate in during the competition Y?
+
+SELECT (COUNT(?match) AS ?totalMatches)
+WHERE {
+  ?match :participation :TeamX ;
+         :partOfCompetition :CompetitionY .
+}

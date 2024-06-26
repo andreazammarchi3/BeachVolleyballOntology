@@ -1,0 +1,11 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# What is the total number of block errors made by player X in all competitions?
+
+SELECT (SUM(?blockErrors) AS ?totalBlockErrors)
+WHERE {
+  ?performance :hasPlayer :PlayerX ;
+               :blockErrors ?blockErrors .
+}

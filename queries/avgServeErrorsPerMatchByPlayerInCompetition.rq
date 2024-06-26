@@ -1,0 +1,13 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# What is the average number of serve errors per match by player X in the competition Y?
+
+SELECT (AVG(?serveErrors) AS ?averageServeErrors)
+WHERE {
+  ?performance :hasPlayer :PlayerX ;
+               :serveErrors ?serveErrors ;
+               :partOfMatch ?match .
+  ?match :partOfCompetition :CompetitionY .
+}

@@ -1,0 +1,12 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# How many total points were scored by all players in the competition Y?
+
+SELECT (SUM(?points) AS ?totalPoints)
+WHERE {
+  ?performance :points ?points ;
+               :partOfMatch ?match .
+  ?match :partOfCompetition :CompetitionY .
+}

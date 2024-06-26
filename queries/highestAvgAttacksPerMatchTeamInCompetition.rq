@@ -1,0 +1,16 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# Which team had the highest average number of attacks per match in the competition Y?
+
+SELECT ?team (AVG(?attacks) AS ?averageAttacks)
+WHERE {
+  ?performance :attacks ?attacks ;
+               :partOfMatch ?match .
+  ?match :participation ?team ;
+         :partOfCompetition :CompetitionY .
+}
+GROUP BY ?team
+ORDER BY DESC(?averageAttacks)
+LIMIT 1

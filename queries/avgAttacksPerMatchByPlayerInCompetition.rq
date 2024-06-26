@@ -1,0 +1,13 @@
+
+PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+# What is the average number of attacks per match by player X in the competition Y?
+
+SELECT (AVG(?attacks) AS ?averageAttacks)
+WHERE {
+  ?performance :hasPlayer :PlayerX ;
+               :attacks ?attacks ;
+               :partOfMatch ?match .
+  ?match :partOfCompetition :CompetitionY .
+}
