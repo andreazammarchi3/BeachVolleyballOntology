@@ -1,13 +1,23 @@
-PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX sport: <https://sportschema.org/ontologies/main/>
+PREFIX bv: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-# What is the average number of block errors per match by players of team X in the competition Y?
+# Query that returns the average number of block errors per match by players of team Italy in the competition World Tour 2024 Cancun
 
-SELECT (AVG(?blockErrors) AS ?averageBlockErrors)
+SELECT ?team ?competition (AVG(?blockErrors) AS ?averageBlockErrors)
 WHERE {
-  ?performance :blockErrors ?blockErrors ;
-               :hasPlayer ?player ;
-               :partOfMatch ?match .
-  ?match :participation :TeamX ;
-         :partOfCompetition :CompetitionY .
+    ?team rdfs:label "Team Italy"@en .
+
+    ?athlete sport:memberOf ?team .
+
+    ?competition rdfs:label "World Tour 2024 Cancun"@en .
+
+    ?match a bv:Match .
+    ?match sport:matchInCompetition ?competition .
+
+    ?performance a bv:AthletePerfomance .
+    ?performance bv:performanceOf ?athlete .
+    ?performance bv:performanceIn ?match .
+    ?performance bv:blockErrors ?blockErrors .
 }
+GROUP BY ?team ?competition
