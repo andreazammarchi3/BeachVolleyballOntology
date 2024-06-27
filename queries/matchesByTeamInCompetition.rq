@@ -1,5 +1,5 @@
 PREFIX sport: <https://sportschema.org/ontologies/main/>
-PREFIX bv: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX bvo: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
@@ -15,8 +15,8 @@ WHERE {
 
     ?match sport:matchInCompetition ?competition .
 
-    ?performance a bv:AthletePerfomance .
-    ?performance bv:performanceOf ?athlete .
-    ?performance bv:performanceIn ?match .
+    ?performance a bvo:AthletePerfomance .
+    ?performance bvo:performanceOf ?athlete .
+    ?performance bvo:performanceIn ?match .
 }
 GROUP BY ?team ?competition

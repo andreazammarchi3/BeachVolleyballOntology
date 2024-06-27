@@ -1,5 +1,5 @@
 PREFIX sport: <https://sportschema.org/ontologies/main/>
-PREFIX bv: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX bvo: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 # Query that returns the average number of serve errors per match of the athlete Mario Rossi in the competition World Tour 2024 Cancun
@@ -10,12 +10,12 @@ WHERE {
 
     ?competition rdfs:label "World Tour 2024 Cancun"@en .
 
-    ?match a bv:Match .
+    ?match a bvo:Match .
     ?match sport:matchInCompetition ?competition .
 
-    ?performance a bv:AthletePerfomance .
-    ?performance bv:performanceOf ?athlete .
-    ?performance bv:performanceIn ?match .
-    ?performance bv:serveErrors ?serveErrors .
+    ?performance a bvo:AthletePerfomance .
+    ?performance bvo:performanceOf ?athlete .
+    ?performance bvo:performanceIn ?match .
+    ?performance bvo:serveErrors ?serveErrors .
 }
 GROUP BY ?athlete ?competition

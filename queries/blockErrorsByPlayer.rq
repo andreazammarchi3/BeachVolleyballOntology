@@ -1,5 +1,5 @@
 PREFIX sport: <https://sportschema.org/ontologies/main/>
-PREFIX bv: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX bvo: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 # Query that returns the total number of block errors made by the athlete Mario Rossi in all competitions
@@ -8,8 +8,8 @@ SELECT ?athlete (SUM(?blockErrors) AS ?totalBlockErrors)
 WHERE {
     ?athlete rdfs:label "Mario Rossi"@en .
 
-    ?performance a bv:AthletePerfomance .
-    ?performance bv:performanceOf ?athlete .
-    ?performance bv:blockErrors ?blockErrors .
+    ?performance a bvo:AthletePerfomance .
+    ?performance bvo:performanceOf ?athlete .
+    ?performance bvo:blockErrors ?blockErrors .
 }
 GROUP BY ?athlete
