@@ -523,10 +523,6 @@ sport:startDateTime rdf:type owl:DatatypeProperty ;
 <http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
 
 
-###  https://github.com/andreazammarchi3/BeachVolleyballOntology/Athlete
-bv:Athlete rdf:type owl:Class .
-
-
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/AthletePerfomance
 bv:AthletePerfomance rdf:type owl:Class ;
                      rdfs:comment "Some kind of performance of an athlete in a match."@en ;
@@ -538,21 +534,24 @@ bv:AthletePerfomance rdf:type owl:Class ;
 bv:Match rdf:type owl:Class ;
          rdfs:comment "A contest of competitive actions that generates statistical results."@en ;
          rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
-         rdfs:label "Match"@en .
+         rdfs:label "Match"@en ;
+         rdfs:subClassOf sport:Event .
 
 
 ###  https://sportschema.org/ontologies/main/Athlete
 sport:Athlete rdf:type owl:Class ;
               rdfs:comment "A member of a team."@en ;
               rdfs:isDefinedBy sport: ;
-              rdfs:label "Athlete"@en .
+              rdfs:label "Athlete"@en ;
+              rdfs:subClassOf schema:Person .
 
 
 ###  https://sportschema.org/ontologies/main/Competition
 sport:Competition rdf:type owl:Class ;
                   rdfs:comment "A grouping of matches usually based on proximity by time."@en ;
                   rdfs:isDefinedBy sport: ;
-                  rdfs:label "Competition"@en .
+                  rdfs:label "Competition"@en ;
+                  rdfs:subClassOf schema:SportsEvent .
 
 
 ###  https://sportschema.org/ontologies/main/CompetitionPhase
@@ -567,21 +566,24 @@ sport:CompetitionPhase rdf:type owl:Class ;
 sport:GoverningBody rdf:type owl:Class ;
                     rdfs:comment "The organisation that creates and polices the rules of a sports competition."@en ;
                     rdfs:isDefinedBy sport: ;
-                    rdfs:label "Governing Body"@en .
+                    rdfs:label "Governing Body"@en ;
+                    rdfs:subClassOf schema:SportsOrganization .
 
 
 ###  https://sportschema.org/ontologies/main/Site
 sport:Site rdf:type owl:Class ;
            rdfs:comment "The location where an activity takes place."@en ;
            rdfs:isDefinedBy sport: ;
-           rdfs:label "Site"@en .
+           rdfs:label "Site"@en ;
+           rdfs:subClassOf schema:SportsActivityLocation .
 
 
 ###  https://sportschema.org/ontologies/main/Team
 sport:Team rdf:type owl:Class ;
            rdfs:comment "A group of athletes competing as one entity."@en ;
            rdfs:isDefinedBy sport: ;
-           rdfs:label "Team"@en .
+           rdfs:label "Team"@en ;
+           rdfs:subClassOf schema:SportsTeam .
 
 
 #################################################################
