@@ -1,15 +1,25 @@
-PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX sport: <https://sportschema.org/ontologies/main/>
+PREFIX bv: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-# Which team had the highest average number of attacks per match in the competition Y?
+# Query to identify the team with the highest average number of attacks per match in the competition World Tour 2024 Cancun
 
-SELECT ?team (AVG(?attacks) AS ?averageAttacks)
+SELECT ?team ?competition (AVG(?attacks) AS ?averageAttacks)
 WHERE {
-  ?performance :attacks ?attacks ;
-               :partOfMatch ?match .
-  ?match :participation ?team ;
-         :partOfCompetition :CompetitionY .
+    ?team a sport:Team .
+
+    ?athlete sport:memberOf ?team .
+
+    ?competition rdfs:label "World Tour 2024 Cancun"@en .
+
+    ?match sport:matchInCompetition ?competition .
+
+    ?performance a bv:AthletePerfomance .
+    ?performance bv:performanceOf ?athlete .
+    ?performance bv:performanceIn ?match .
+    ?performance bv:attacks ?attacks .
 }
-GROUP BY ?team
+GROUP BY ?team ?competition
 ORDER BY DESC(?averageAttacks)
 LIMIT 1

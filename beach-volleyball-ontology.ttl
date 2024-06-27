@@ -523,6 +523,10 @@ sport:startDateTime rdf:type owl:DatatypeProperty ;
 <http://www.w3.org/2004/02/skos/core#Concept> rdf:type owl:Class .
 
 
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/Athlete
+bv:Athlete rdf:type owl:Class .
+
+
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/AthletePerfomance
 bv:AthletePerfomance rdf:type owl:Class ;
                      rdfs:comment "Some kind of performance of an athlete in a match."@en ;
@@ -587,7 +591,6 @@ sport:Team rdf:type owl:Class ;
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/AlexeyKrasilnikov
 bv:AlexeyKrasilnikov rdf:type owl:NamedIndividual ,
                               sport:Athlete ;
-                              sport:memberOf bv:TeamRussia ;
                      rdfs:label "Alexey Krasilnikov"@en .
 
 
@@ -690,7 +693,6 @@ bv:FIVB rdf:type owl:NamedIndividual ,
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JeanPierre
 bv:JeanPierre rdf:type owl:NamedIndividual ,
                        sport:Athlete ;
-                       sport:teamMemberOf bv:TeamFrance ;
               rdfs:label "Jean Pierre"@en .
 
 
@@ -781,7 +783,6 @@ bv:JeanPierrePerformanceWorldTour2024CancunPhase2Match4 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JoaoPedroSilva
 bv:JoaoPedroSilva rdf:type owl:NamedIndividual ,
                            sport:Athlete ;
-                           sport:memberOf bv:TeamBrasil ;
                   rdfs:label "Joao Pedro Silva"@en .
 
 
@@ -928,7 +929,6 @@ bv:JoaoPedroSilvaPerformanceWorldTour2024CancunPhase4Match2 rdf:type owl:NamedIn
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JohnSmith
 bv:JohnSmith rdf:type owl:NamedIndividual ,
                       sport:Athlete ;
-                      sport:memberOf bv:TeamUSA ;
              rdfs:label "John Smith"@en .
 
 
@@ -1075,7 +1075,6 @@ bv:JohnSmithPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/JuanPerez
 bv:JuanPerez rdf:type owl:NamedIndividual ,
                       sport:Athlete ;
-                      sport:teamMemberOf bv:TeamSpain ;
              rdfs:label "Juan Perez"@en .
 
 
@@ -1166,7 +1165,6 @@ bv:JuanPerezPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LarsFluggen
 bv:LarsFluggen rdf:type owl:NamedIndividual ,
                         sport:Athlete ;
-                 sport:memberOf bv:TeamGermany ;
                rdfs:label "Lars Fluggen"@en .
 
 
@@ -1255,10 +1253,7 @@ bv:LarsFluggenPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:NamedIndiv
 
 
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LouisDupont
-bv:LouisDupont rdf:type owl:NamedIndividual ,
-                 sport:Athlete ;
-                 sport:memberOf bv:TeamFrance ;
-                 rdfs:label "Louis Dupont"@en .
+bv:LouisDupont rdf:type owl:NamedIndividual .
 
 
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LouisDupontPerformanceWorldTour2024CancunPhase2Match4
@@ -1354,7 +1349,6 @@ bv:LouisLafontPerformanceWorldTour2024CancunPhase1Match5 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/LuigiBianchi
 bv:LuigiBianchi rdf:type owl:NamedIndividual ,
                          sport:Athlete ;
-                         sport:memberOf bv:TeamItaly ;
                 rdfs:label "Luigi Bianchi"@en .
 
 
@@ -1501,7 +1495,6 @@ bv:LuigiBianchiPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarcusBockermann
 bv:MarcusBockermann rdf:type owl:NamedIndividual ,
                              sport:Athlete ;
-                             sport:memberOf bv:TeamGermany ;
                     rdfs:label "Marcus Bockermann"@en .
 
 
@@ -1592,7 +1585,6 @@ bv:MarcusBockermannPerformanceWorldTour2024CancunPhase2Match1 rdf:type owl:Named
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MarioRossi
 bv:MarioRossi rdf:type owl:NamedIndividual ,
                        sport:Athlete ;
-                       sport:memberOf bv:TeamItaly ;
               rdfs:label "Mario Rossi"@en .
 
 
@@ -1739,7 +1731,6 @@ bv:MarioRossiPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndivi
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/MikeJohnson
 bv:MikeJohnson rdf:type owl:NamedIndividual ,
                         sport:Athlete ;
-                        sport:memberOf bv:TeamUSA ;
                rdfs:label "Mike Johnson"@en .
 
 
@@ -1886,7 +1877,6 @@ bv:MikeJohnsonPerformanceWorldTour2024CancunPhase4Match1 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/OlegStoyanovskiy
 bv:OlegStoyanovskiy rdf:type owl:NamedIndividual ,
                              sport:Athlete ;
-                             sport:memberOf bv:TeamRussia ;
                     rdfs:label "Oleg Stoyanovskiy"@en .
 
 
@@ -1921,7 +1911,6 @@ bv:OlegStoyanovskiyPerformanceWorldTour2024CancunPhase1Match4 rdf:type owl:Named
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroGarcia
 bv:PedroGarcia rdf:type owl:NamedIndividual ,
                         sport:Athlete ;
-                        sport:teamMemberOf bv:TeamSpain ;
                rdfs:label "Pedro Garcia"@en .
 
 
@@ -2012,7 +2001,6 @@ bv:PedroGarciaPerformanceWorldTour2024CancunPhase2Match3 rdf:type owl:NamedIndiv
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/PedroHenriqueGomes
 bv:PedroHenriqueGomes rdf:type owl:NamedIndividual ,
                                sport:Athlete ;
-                               sport:memberOf bv:TeamBrasil ;
                       rdfs:label "Pedro Henrique Gomes"@en .
 
 
@@ -2159,7 +2147,6 @@ bv:PedroHenriqueGomesPerformanceWorldTour2024CancunPhase4Match2 rdf:type owl:Nam
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamPedlow
 bv:SamPedlow rdf:type owl:NamedIndividual ,
                       sport:Athlete ;
-                      sport:memberOf bv:TeamCanada ;
              rdfs:label "Sam Pedlow"@en .
 
 
@@ -2306,7 +2293,6 @@ bv:SamPedlowPerformanceWorldTour2024CancunPhase4Match2 rdf:type owl:NamedIndivid
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/SamSchachter
 bv:SamSchachter rdf:type owl:NamedIndividual ,
                          sport:Athlete ;
-                         sport:memberOf bv:TeamCanada ;
                 rdfs:label "Sam Schachter"@en .
 
 

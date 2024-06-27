@@ -1,10 +1,22 @@
-PREFIX : <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
+PREFIX sport: <https://sportschema.org/ontologies/main/>
+PREFIX bv: <https://github.com/andreazammarchi3/BeachVolleyballOntology/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 
-# How many matches did team X participate in during the competition Y?
+# Query to count the number of matches Team Italy participated in during the competition World Tour 2024 Cancun
 
-SELECT (COUNT(?match) AS ?totalMatches)
+SELECT ?team ?competition (COUNT(DISTINCT ?match) AS ?numberOfMatches)
 WHERE {
-  ?match :participation :TeamX ;
-         :partOfCompetition :CompetitionY .
+    ?team rdfs:label "Team Italy"@en .
+
+    ?athlete sport:memberOf ?team .
+
+    ?competition rdfs:label "World Tour 2024 Cancun"@en .
+
+    ?match sport:matchInCompetition ?competition .
+
+    ?performance a bv:AthletePerfomance .
+    ?performance bv:performanceOf ?athlete .
+    ?performance bv:performanceIn ?match .
 }
+GROUP BY ?team ?competition
