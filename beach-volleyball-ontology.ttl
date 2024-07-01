@@ -1,3 +1,4 @@
+@prefix : <https://github.com/andreazammarchi3/BeachVolleyballOntology/> .
 @prefix bvo: <https://github.com/andreazammarchi3/BeachVolleyballOntology/> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -51,6 +52,15 @@ xsd:date rdf:type rdfs:Datatype .
 #################################################################
 #    Object Properties
 #################################################################
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/canParticipateIn
+bvo:canParticipateIn rdf:type owl:ObjectProperty ;
+                     rdfs:domain sport:Team ;
+                     rdfs:range bvo:Competition ;
+                     rdfs:comment "Check if a team can participate in a competition."@en ;
+                     rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                     rdfs:label "can participate in"@en .
+
 
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/performanceIn
 bvo:performanceIn rdf:type owl:ObjectProperty ;
@@ -272,6 +282,15 @@ bvo:errors rdf:type owl:DatatypeProperty ;
            rdfs:label "errors"@en .
 
 
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/hasTwoMembers
+bvo:hasTwoMembers rdf:type owl:DatatypeProperty ;
+                  rdfs:domain sport:Team ;
+                  rdfs:range xsd:boolean ;
+                  rdfs:comment "Check if a team has two members."@en ;
+                  rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
+                  rdfs:label "has two members"@en .
+
+
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/points
 bvo:points rdf:type owl:DatatypeProperty ;
            rdfs:domain bvo:AthletePerfomance ;
@@ -428,6 +447,10 @@ bvo:AthletePerfomance rdf:type owl:Class ;
                       rdfs:comment "Some kind of performance of an athlete in a match."@en ;
                       rdfs:isDefinedBy <https://github.com/andreazammarchi3/BeachVolleyballOntology/> ;
                       rdfs:label "Athlete Performance"@en .
+
+
+###  https://github.com/andreazammarchi3/BeachVolleyballOntology/Competition
+bvo:Competition rdf:type owl:Class .
 
 
 ###  https://github.com/andreazammarchi3/BeachVolleyballOntology/Match
@@ -2785,5 +2808,86 @@ sport:competitionType rdfs:comment "The type of a Competition, e.g. spct:recurri
                       rdfs:isDefinedBy sport: ;
                       rdfs:label "competition type"@en .
 
+
+#################################################################
+#    Rules
+#################################################################
+
+bvo:t rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+bvo:c rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+bvo:a1 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+bvo:a2 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "" ;
+   rdfs:label "canParticipateIn" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> sport:Team ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> bvo:t
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> bvo:hasTwoMembers ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> bvo:t ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> "true"^^xsd:boolean
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#classPredicate> sport:Competition ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> bvo:c
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> bvo:canParticipateIn ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> bvo:t ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> bvo:c
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "" ;
+   rdfs:label "hasTwoMembers" ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#classPredicate> sport:Team ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> bvo:t
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> sport:member ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> bvo:t ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> bvo:a1
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#propertyPredicate> sport:member ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument1> bvo:t ;
+                                                                             <http://www.w3.org/2003/11/swrl#argument2> bvo:a2
+                                                                           ] ;
+                                                                 rdf:rest rdf:nil
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> bvo:hasTwoMembers ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> bvo:t ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> "true"^^xsd:boolean
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
 
 ###  Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi
